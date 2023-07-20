@@ -4,7 +4,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Badge } from '@rneui/themed';
 
-import styles from './HeaderHome.styles';
+import styles from './header_home_styles';
 
 // type inputSearchType = {
 //     text: string;

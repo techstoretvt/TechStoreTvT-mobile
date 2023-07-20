@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-async-storage/async-storage": "^1.19.1",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/material-bottom-tabs": "^6.2.16",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
+    "@reduxjs/toolkit": "^1.9.5",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
     "@types/react-native-vector-icons": "^6.4.13",
@@ -24,7 +26,13 @@
     "react-native-safe-area-context": "^4.6.3",
     "react-native-screens": "^3.22.0",
     "react-native-swiper": "^1.6.0",
-    "react-native-vector-icons": "^9.2.0"
+    "react-native-vector-icons": "^9.2.0",
+    "react-redux": "^8.1.1",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "redux-saga": "^1.2.3",
+    "redux-thunk": "^2.4.2",
+    "reselect": "^4.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

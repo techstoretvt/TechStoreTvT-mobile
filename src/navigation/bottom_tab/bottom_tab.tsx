@@ -1,11 +1,11 @@
 /* eslint-disable */
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import HomeScreen from '../../Screens/HomeScreen/Home.screen';
-import ShortVideoScreen from '../../Screens/ShortVideoScreen/ShortVideo.screen';
-import BlogScreen from '../../Screens/BlogScreen/Blog.screen';
-import NotifyScreen from '../../Screens/NotifyScreen/Notify.screen';
-import MyAccountScreen from '../../Screens/MyAccountScreen/MyAccount.screen';
+import HomeScreen from '../../screens/home_screen/home_screen';
+import ShortVideoScreen from '../../screens/short_video_screen/short_video_screen';
+import BlogScreen from '../../screens/blog_screen/blog_screen';
+import NotifyScreen from '../../screens/notify_screen/notify_screen';
+import MyAccountScreen from '../../screens/my_account_screen/my_account_screen';
 
 const Tab = createMaterialBottomTabNavigator();
 

@@ -2,7 +2,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-import styles from './Background.styles';
+import styles from './background_styles';
 
 const Background = () => {
     return (

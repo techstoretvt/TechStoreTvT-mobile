@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { View, Image, StatusBar } from 'react-native';
 import React from 'react';
-import styles from './SliderImage.styles';
+import styles from './slider_image_styles';
 import Swiper from 'react-native-swiper';
 
 // const windowWidth = Dimensions.get('window').width;
