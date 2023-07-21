@@ -31,6 +31,7 @@ function SliderImage({ listImages }) {
                         />
                     ))}
                 </Swiper>
+                <View style={styles.overlay} />
             </View>
         </View>
     );

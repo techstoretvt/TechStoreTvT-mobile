@@ -1,7 +1,0 @@
-Name folder: home_screen
-Name file: slider_image.tsx
-Name component: BlogScreen
-Name function/variable: handle_get_time
-
-
-Release android: gradlew.bat assembleRelease

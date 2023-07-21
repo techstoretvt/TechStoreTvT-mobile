@@ -1,15 +1,16 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, ImageBackground } from 'react-native';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './home_screen_styles';
-import { selectAppSettings } from '../../store/selectors';
-import { setTheme } from '../../store/appReducer';
+// import { selectAppSettings } from '../../store/selectors';
+// import { setTheme } from '../../store/appReducer';
 
 import Background from '../../components/background/background';
 import SliderImage from '../../components/slider_image/slider_image';
 import HeaderHome from '../../components/header_home/header_home';
+import Category from '../../components/category/category';
 
 const listImages = [
     'https://source.unsplash.com/random?sig=1',
@@ -21,13 +22,17 @@ const listImages = [
 ];
 
 const HomeScreen = () => {
-    const appSettings = useSelector(selectAppSettings);
-    const dispatch = useDispatch();
+    // const appSettings = useSelector(selectAppSettings);
+    // const dispatch = useDispatch();
 
-    const handleThemeUpdate = () => {
-        // Gọi action creator setTheme để cập nhật theme
-        dispatch(setTheme(appSettings.theme === 'dark' ? 'light' : 'dark'));
-    };
+    // useEffect(() => {
+    //     console.log(appSettings.theme);
+    // }, []);
+
+    // const handleThemeUpdate = () => {
+    //     // Gọi action creator setTheme để cập nhật theme
+    //     dispatch(setTheme(appSettings.theme === 'dark' ? 'light' : 'dark'));
+    // };
 
     return (
         <View style={styles.home_container}>
@@ -39,7 +44,12 @@ const HomeScreen = () => {
                     <SliderImage listImages={listImages} />
                 </View>
             </View>
-            <View style={styles.banner_home_container}>
+
+            {/* Banner */}
+            <ImageBackground
+                source={require('../../assets/images/HomeScreen/banner.png')}
+                style={styles.banner_home_container}
+            >
                 <View style={styles.banner_home_Image_wrap}>
                     <Image
                         style={styles.banner_home_Image}
@@ -50,26 +60,45 @@ const HomeScreen = () => {
                 </View>
                 <View style={styles.banner_home_wrap_text}>
                     <View>
-                        <Text>iPhone 14 Pro</Text>
+                        <Text
+                            style={[
+                                styles.banner_home_text,
+                                styles.banner_home_text_title,
+                            ]}
+                        >
+                            iPhone 14 Pro
+                        </Text>
                     </View>
-                    <Text>Pro.Beyond. Pro.Beyond</Text>
+                    <Text style={styles.banner_home_text}>
+                        Pro.Beyond. Pro.Beyond
+                    </Text>
                     <View>
-                        <Text>Giá gốc từ 21.990.000đ</Text>
+                        <Text style={styles.banner_home_text}>
+                            Giá gốc từ 21.990.000đ
+                        </Text>
                     </View>
-                    <Text>Đăng ký mua ngay kẻo lở</Text>
-                    <Text>Mở bán từ 7/5</Text>
+                    <Text style={styles.banner_home_text}>
+                        Đăng ký mua ngay kẻo lở
+                    </Text>
+                    <Text style={styles.banner_home_text}>Mở bán từ 7/5</Text>
                 </View>
+            </ImageBackground>
+
+            {/* Category */}
+            <View style={styles.Category_container}>
+                <Category />
             </View>
-            <View>
+
+            {/* <View>
                 <Text>Theme: {appSettings.theme}</Text>
                 <Text>Language: {appSettings.language}</Text>
-            </View>
-            <View>
+            </View> */}
+            {/* <View>
                 <Button
                     title="Update Theme to Dark"
                     onPress={handleThemeUpdate}
                 />
-            </View>
+            </View> */}
 
             <Background />
         </View>

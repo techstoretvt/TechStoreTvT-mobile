@@ -8,6 +8,7 @@ function* changeThemeSaga(action) {
     try {
         // Xử lý logic thay đổi chủ đề ở đây (ví dụ: lưu vào AsyncStorage, LocalStorage)
         // Giả sử action.payload là tên chủ đề mới
+        console.log('vao saga (action.payload): ', action.payload);
         yield put(setTheme(action.payload));
     } catch (error) {
         // Xử lý lỗi nếu cần

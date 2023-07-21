@@ -12,12 +12,19 @@ const styles = StyleSheet.create({
     },
     swiper: {
         paddingTop: 0,
+        backgroundColor: '#006D98',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#72639F', // Màu của lớp phủ
+        opacity: 0.3,
     },
     Image: {
         width: windowWidth,
         height: 200,
         objectFit: 'cover',
         flexShrink: 0,
+        opacity: 1,
     },
 });
 

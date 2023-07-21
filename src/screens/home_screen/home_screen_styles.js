@@ -25,17 +25,21 @@ const styles = StyleSheet.create({
 
     /* banner home */
     banner_home_container: {
-        // flex: 1,
-        // height: 200,
         flexDirection: 'row',
-        shadowColor: 'red',
-        elevation: 50,
+        shadowColor: 'blue',
+        elevation: 20,
+        borderRadius: 5,
+        borderTopStartRadius: 20,
+        borderTopRightRadius: 20,
+        position: 'relative',
+        top: -16,
+        backgroundColor: '#fcfcfc',
+        marginHorizontal: 5,
     },
     banner_home_Image_wrap: {
-        backgroundColor: '#ccc',
         alignItems: 'center',
         flex: 1,
-        height: 100,
+        height: 150,
     },
     banner_home_Image: {
         flex: 1,
@@ -45,6 +49,26 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    banner_home_text: {
+        color: '#fff',
+        fontWeight: '700',
+        textShadowColor: '#000', // Màu sắc của bóng đổ (cùng màu với nền trắng)
+        textShadowOffset: { width: 2, height: 2 }, // Điều chỉnh độ dài và chiều cao của bóng đổ
+        textShadowRadius: 10, // Độ mờ của bóng đổ
+        fontSize: 16,
+    },
+    banner_home_text_title: {
+        fontSize: 20,
+        color: '#fff',
+        textShadowColor: 'blue',
+        textShadowRadius: 1,
+    },
+
+    /*Category */
+    Category_container: {
+        marginTop: 0,
+        height: 200,
     },
 });
 
