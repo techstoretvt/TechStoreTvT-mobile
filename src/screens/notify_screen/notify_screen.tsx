@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAppSettings } from '../../store/selectors';
-import { setTheme } from '../../store/appReducer';
+import { setTheme, setLanguage } from '../../store/appReducer';
 
 const NotifyScreen = () => {
     const appSettings = useSelector(selectAppSettings);
@@ -12,6 +12,7 @@ const NotifyScreen = () => {
     const handleThemeUpdate = () => {
         // Gọi action creator setTheme để cập nhật theme
         dispatch(setTheme(appSettings.theme === 'dark' ? 'light' : 'dark'));
+        dispatch(setLanguage(appSettings.language === 'en' ? 'vi' : 'en'));
     };
     return (
         <View>

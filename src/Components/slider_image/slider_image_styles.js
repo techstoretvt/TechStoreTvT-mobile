@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     container: {
         // flex: 1,
     },
-    slider: {
-        height: 200,
-    },
+    slider: {},
     swiper: {
         paddingTop: 0,
         backgroundColor: '#006D98',
@@ -18,6 +16,7 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         backgroundColor: '#72639F', // Màu của lớp phủ
         opacity: 0.3,
+        pointerEvents: 'none',
     },
     Image: {
         width: windowWidth,

@@ -6,19 +6,20 @@ import Swiper from 'react-native-swiper';
 
 // const windowWidth = Dimensions.get('window').width;
 
-function SliderImage({ listImages }) {
+function SliderImage({ listImages, height = 200, showsPagination = true }) {
     return (
         <View style={styles.container}>
             <View style={styles.slider}>
                 <StatusBar translucent backgroundColor="transparent" />
                 <Swiper
                     showsButtons={false}
-                    style={styles.swiper}
+                    style={[styles.swiper, { height }]}
                     horizontal={true}
                     autoplay={true}
                     dotColor="#fff"
                     autoplayTimeout={4}
                     removeClippedSubviews={false}
+                    showsPagination={showsPagination}
                     // automaticallyAdjustContentInsets={true}
                 >
                     {listImages?.map((img, index) => (

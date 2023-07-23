@@ -3,9 +3,17 @@
 import { combineReducers } from '@reduxjs/toolkit';
 // Import tất cả các reducer đã tạo
 import appReducer from './appReducer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistReducer } from 'redux-persist';
+
+const appPersistConfig = {
+    key: 'app',
+    storage: AsyncStorage,
+    blacklist: ['language'],
+};
 
 const rootReducer = combineReducers({
-    app: appReducer,
+    app: persistReducer(appPersistConfig, appReducer),
 });
 
 export default rootReducer;
