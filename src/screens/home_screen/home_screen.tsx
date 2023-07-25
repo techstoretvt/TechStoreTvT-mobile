@@ -12,14 +12,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Slider } from '@rneui/themed';
 
 import styles from './home_screen_styles';
-// import { selectAppSettings } from '../../store/selectors';
-// import { setTheme } from '../../store/appReducer';
 import CountDown from 'react-native-countdown-component';
+import { getSuggestProduct } from '../../services/api';
 
 import Background from '../../components/background/background';
 import SliderImage from '../../components/slider_image/slider_image';
 import HeaderHome from '../../components/header_home/header_home';
 import Category from '../../components/category/category';
+import CardProduct from '../../components/card_product/card_product';
 
 const listImages = [
     'https://source.unsplash.com/random?sig=1',
@@ -31,17 +31,14 @@ const listImages = [
 ];
 
 const HomeScreen = () => {
-    // const appSettings = useSelector(selectAppSettings);
-    // const dispatch = useDispatch();
+    React.useEffect(() => {
+        handleGetSuggestProduct();
+    }, []);
 
-    // useEffect(() => {
-    //     console.log(appSettings.theme);
-    // }, []);
-
-    // const handleThemeUpdate = () => {
-    //     // Gọi action creator setTheme để cập nhật theme
-    //     dispatch(setTheme(appSettings.theme === 'dark' ? 'light' : 'dark'));
-    // };
+    const handleGetSuggestProduct = async () => {
+        let res = await getSuggestProduct();
+        console.log(res);
+    };
 
     return (
         <ScrollView
@@ -613,6 +610,38 @@ const HomeScreen = () => {
                         height={120}
                         showsPagination={false}
                     />
+                </View>
+            </View>
+
+            {/* suggestion */}
+            <View style={styles.suggestion_container}>
+                <View style={styles.suggestion_container_header}>
+                    <Text style={styles.suggestion_container_header_title}>
+                        Gới ý hôm nay
+                    </Text>
+                </View>
+                <View style={styles.suggestion_container_listProduct}>
+                    <View
+                        style={
+                            styles.suggestion_container_listProduct_wrapProduct
+                        }
+                    >
+                        <CardProduct />
+                    </View>
+                    <View
+                        style={
+                            styles.suggestion_container_listProduct_wrapProduct
+                        }
+                    >
+                        <CardProduct />
+                    </View>
+                    <View
+                        style={
+                            styles.suggestion_container_listProduct_wrapProduct
+                        }
+                    >
+                        <CardProduct />
+                    </View>
                 </View>
             </View>
 

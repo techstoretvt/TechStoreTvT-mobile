@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     promotionProduct_header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingHorizontal: 10,
     },
     promotionProduct_header_left: {},
     promotionProduct_header_right: {
@@ -224,7 +225,6 @@ const styles = StyleSheet.create({
         marginTop: 6,
     },
     promotionProduct_listProduct_product: {
-        // backgroundColor: '#fff',
         width: 150,
         padding: 10,
     },
@@ -284,6 +284,29 @@ const styles = StyleSheet.create({
     finallyAdvertisement_wrapSlider: {
         marginTop: 10,
         paddingHorizontal: 10,
+    },
+
+    /* suggestion */
+    suggestion_container: {
+        marginTop: 20,
+    },
+    suggestion_container_header: {
+        paddingHorizontal: 10,
+    },
+    suggestion_container_header_title: {
+        color: 'red',
+        fontWeight: '900',
+        fontSize: 20,
+        textTransform: 'uppercase',
+    },
+    suggestion_container_listProduct: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    suggestion_container_listProduct_wrapProduct: {
+        minHeight: 200,
+        width: '50%',
+        padding: 10,
     },
 });
 
