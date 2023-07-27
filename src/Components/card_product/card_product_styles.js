@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     CardProduct_container_wrapImage: {
         aspectRatio: 1 / 1,
         position: 'relative',
+        // backgroundColor: 'green',
     },
     CardProduct_container_wrapImage_logo: {
         position: 'absolute',
@@ -29,6 +30,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'red',
         paddingHorizontal: 6,
         borderRadius: 4,
+    },
+    CardProduct_container_wrapImage_promotion: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        backgroundColor: 'orange',
+        alignItems: 'center',
+        paddingHorizontal: 6,
+        borderRadius: 4,
+        paddingVertical: 4,
+    },
+    CardProduct_container_wrapImage_promotion_text1: {
+        color: '#fff',
+        fontWeight: '800',
+    },
+    CardProduct_container_wrapImage_promotion_text2: {
+        color: 'red',
+        fontWeight: '900',
     },
     CardProduct_container_trademark: {
         paddingHorizontal: 6,

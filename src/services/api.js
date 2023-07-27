@@ -1,14 +1,15 @@
 /* eslint-disable prettier/prettier */
-// import axios from '../services/axios';
-import axios from 'axios';
+import axios from '../services/axios';
 
-const getSuggestProduct = async () => {
+const getSuggestProduct = async (listDiscard) => {
     try {
-        return await axios.get(
-            'http://localhost:4000/api/v2/get-suggest-product-mobile'
-        );
+        return await axios.get('/api/v2/get-suggest-product-mobile', {
+            params: {
+                listDiscard,
+            },
+        });
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
         if (error?.response?.data) return error?.response?.data;
         return {
             errCode: -1,

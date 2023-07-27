@@ -20,6 +20,7 @@ import SliderImage from '../../components/slider_image/slider_image';
 import HeaderHome from '../../components/header_home/header_home';
 import Category from '../../components/category/category';
 import CardProduct from '../../components/card_product/card_product';
+import { typeProdutView } from '../../utils/interface';
 
 const listImages = [
     'https://source.unsplash.com/random?sig=1',
@@ -31,13 +32,27 @@ const listImages = [
 ];
 
 const HomeScreen = () => {
+    const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>([]);
+    const [listDiscard, setListDiscard] = React.useState([]);
+
     React.useEffect(() => {
         handleGetSuggestProduct();
+
+        return () => {
+            console.log('bye');
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleGetSuggestProduct = async () => {
-        let res = await getSuggestProduct();
-        console.log(res);
+        let res = await getSuggestProduct(listDiscard);
+        if (res?.errCode === 0) {
+            let newListDiscards = res.data.map((item: any) => item.id);
+            newListDiscards = [...listDiscard, ...newListDiscards];
+            console.log(newListDiscards);
+            setListDiscard(newListDiscards);
+            setListSuggest(res.data);
+        }
     };
 
     return (
@@ -621,27 +636,16 @@ const HomeScreen = () => {
                     </Text>
                 </View>
                 <View style={styles.suggestion_container_listProduct}>
-                    <View
-                        style={
-                            styles.suggestion_container_listProduct_wrapProduct
-                        }
-                    >
-                        <CardProduct />
-                    </View>
-                    <View
-                        style={
-                            styles.suggestion_container_listProduct_wrapProduct
-                        }
-                    >
-                        <CardProduct />
-                    </View>
-                    <View
-                        style={
-                            styles.suggestion_container_listProduct_wrapProduct
-                        }
-                    >
-                        <CardProduct />
-                    </View>
+                    {listSuggest?.map((item) => (
+                        <View
+                            key={item.id}
+                            style={
+                                styles.suggestion_container_listProduct_wrapProduct
+                            }
+                        >
+                            <CardProduct data={item} />
+                        </View>
+                    ))}
                 </View>
             </View>
 

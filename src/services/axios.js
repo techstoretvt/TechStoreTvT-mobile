@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import axios from 'axios';
+import { REACT_APP_URL_BACKEND } from '../utils/constant';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:4000',
+    baseURL: REACT_APP_URL_BACKEND,
     // withCredentials: true
 });
 

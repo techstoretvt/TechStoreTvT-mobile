@@ -3,13 +3,71 @@ import { View, Text, ImageBackground, Image } from 'react-native';
 import React from 'react';
 
 import styles from './card_product_styles';
+import { typeProdutView } from '../../utils/interface';
+import { formatNumber, formatNumberToThousands } from '../../utils/common';
 
-const CardProduct = () => {
+interface propsTypes {
+    data: typeProdutView;
+}
+
+const CardProduct = ({ data }: propsTypes) => {
+    React.useEffect(() => {
+        // console.log(data);
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const checkPromotion = (data: {
+        timePromotion: number;
+        numberPercent: number;
+    }) => {
+        if (!data) {
+            return false;
+        }
+
+        if (data.numberPercent === 0) {
+            return false;
+        }
+        let now = new Date().getTime();
+        if (now > data.timePromotion) {
+            return false;
+        }
+        return true;
+    };
+
+    const getRootPrice = () => {
+        if (
+            !data['classifyProduct-product'] ||
+            !data['classifyProduct-product'][0] ||
+            !data['classifyProduct-product'][0].nameClassifyProduct ||
+            data['classifyProduct-product'][0].nameClassifyProduct === 'default'
+        ) {
+            return +data.priceProduct;
+        }
+
+        return data['classifyProduct-product'][0].priceClassify;
+    };
+
+    const getCurrentPrice = () => {
+        let rootPrice = getRootPrice();
+        let isPromotion = checkPromotion(data.promotionProducts[0]);
+        if (!isPromotion) {
+            return rootPrice;
+        }
+        let price =
+            (rootPrice * (100 - data.promotionProducts[0].numberPercent)) / 100;
+        return price;
+    };
+
     return (
         <View style={styles.CardProduct_container}>
             <ImageBackground
                 style={styles.CardProduct_container_wrapImage}
-                source={{ uri: 'https://source.unsplash.com/random?sig=11' }}
+                source={{
+                    uri:
+                        data &&
+                        data['imageProduct-product'] &&
+                        data['imageProduct-product'][0].imagebase64,
+                }}
             >
                 <View style={styles.CardProduct_container_wrapImage_logo}>
                     <Image
@@ -32,10 +90,34 @@ const CardProduct = () => {
                         Yêu thích
                     </Text>
                 </View>
+                {data &&
+                    data.promotionProducts &&
+                    checkPromotion(data.promotionProducts[0]) && (
+                        <View
+                            style={
+                                styles.CardProduct_container_wrapImage_promotion
+                            }
+                        >
+                            <Text
+                                style={
+                                    styles.CardProduct_container_wrapImage_promotion_text1
+                                }
+                            >
+                                Giảm
+                            </Text>
+                            <Text
+                                style={
+                                    styles.CardProduct_container_wrapImage_promotion_text2
+                                }
+                            >
+                                {data.promotionProducts[0].numberPercent}
+                            </Text>
+                        </View>
+                    )}
             </ImageBackground>
             <View style={styles.CardProduct_container_trademark}>
                 <Text style={styles.CardProduct_container_trademark_text}>
-                    Asus
+                    {data?.trademark?.nameTrademark}
                 </Text>
             </View>
             <View style={styles.CardProduct_container_nameProduct}>
@@ -44,24 +126,28 @@ const CardProduct = () => {
                     ellipsizeMode="tail"
                     style={styles.CardProduct_container_nameProduct_text}
                 >
-                    Ten san pham
+                    {data?.nameProduct}
                 </Text>
             </View>
             <View style={styles.CardProduct_container_priceCurrent}>
                 <Text style={styles.CardProduct_container_priceCurrent_text}>
-                    6,460,000d
+                    {data && formatNumberToThousands(getCurrentPrice()) + '₫'}
                 </Text>
             </View>
             <View style={styles.CardProduct_container_pricePromotion}>
                 <Text style={styles.CardProduct_container_pricePromotion_text}>
-                    6,460,000
+                    {data?.promotionProducts[0] &&
+                        checkPromotion(data?.promotionProducts[0]) &&
+                        formatNumberToThousands(getRootPrice()) + '₫'}
                 </Text>
             </View>
             <View style={styles.CardProduct_container_sale}>
                 <Text style={styles.CardProduct_container_sale_text}>
                     Đã bán
                 </Text>
-                <Text style={styles.CardProduct_container_sale_text}>890k</Text>
+                <Text style={styles.CardProduct_container_sale_text}>
+                    {data && formatNumber(data.sold)}
+                </Text>
             </View>
         </View>
     );
