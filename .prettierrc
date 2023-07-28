@@ -1,5 +1,27 @@
 {
-    "tabWidth": 4,
+    "printWidth": 120,
+    "tabWidth": 2,
+    "useTabs": false,
     "semi": true,
-    "singleQuote": true
-}
+    "trailingComma": "all",
+    "singleQuote": true,
+    "jsxBracketSameLine": false,
+    "arrowParens": "avoid",
+    "proseWrap": "always",
+    "endOfLine": "lf",
+    "embeddedLanguages": {
+      "typescript": true
+    },
+    "overrides": [
+      {
+        "files": "**/*.json",
+        "options": {
+          "parser": "json"
+        }
+      }
+     
+    ],
+    "rules": {
+        "react/jsx-no-inline-styles": "off"
+      }
+  }

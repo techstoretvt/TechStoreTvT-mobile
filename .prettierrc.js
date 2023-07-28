@@ -4,4 +4,7 @@ module.exports = {
   bracketSpacing: false,
   singleQuote: true,
   trailingComma: 'all',
+  rules: {
+    'react/jsx-no-inline-styles': 'off',
+  },
 };
