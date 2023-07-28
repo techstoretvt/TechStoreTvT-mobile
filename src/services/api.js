@@ -9,14 +9,28 @@ const getSuggestProduct = async (listDiscard) => {
             },
         });
     } catch (error) {
-        console.log(error);
-        if (error?.response?.data) return error?.response?.data;
+        if (error?.response?.data) {
+            return error?.response?.data;
+        }
         return {
             errCode: -1,
             errMessage: 'Khong bat duoc loi',
-            // error: JSON.stringify(error),
         };
     }
 };
 
-export { getSuggestProduct };
+const getAllTypeProduct = async () => {
+    try {
+        return await axios.get('/api/get-all-type-product');
+    } catch (error) {
+        if (error?.response?.data) {
+            return error?.response?.data;
+        }
+        return {
+            errCode: -1,
+            errMessage: 'Khong bat duoc loi',
+        };
+    }
+};
+
+export { getSuggestProduct, getAllTypeProduct };

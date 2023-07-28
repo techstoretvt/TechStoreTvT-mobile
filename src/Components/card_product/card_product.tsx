@@ -153,4 +153,4 @@ const CardProduct = ({ data }: propsTypes) => {
     );
 };
 
-export default CardProduct;
+export default React.memo(CardProduct);

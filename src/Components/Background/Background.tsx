@@ -7,7 +7,7 @@ import styles from './background_styles';
 const Background = () => {
     return (
         <View style={styles.container}>
-            <Text>Background</Text>
+            <Text style={{ display: 'none' }}>Background</Text>
         </View>
     );
 };

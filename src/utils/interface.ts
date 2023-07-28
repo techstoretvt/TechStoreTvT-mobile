@@ -20,4 +20,4 @@ export interface typeProdutView {
             priceClassify: number;
         }
     ]
-}
+};

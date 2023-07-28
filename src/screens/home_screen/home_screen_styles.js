@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 10,
         justifyContent: 'space-between',
-        marginTop: 10,
+        marginTop: 20,
     },
     firstAdvertisement_container_wrap: {
         width: windowWidth / 3 - 35,
@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     },
     suggestion_container_header: {
         paddingHorizontal: 10,
+        marginTop: 20,
     },
     suggestion_container_header_title: {
         color: 'red',
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     suggestion_container_listProduct_wrapProduct: {
         minHeight: 200,
         width: '50%',
-        padding: 10,
+        padding: 5,
     },
 });
 

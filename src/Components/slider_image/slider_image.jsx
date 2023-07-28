@@ -38,4 +38,4 @@ function SliderImage({ listImages, height = 200, showsPagination = true }) {
     );
 }
 
-export default SliderImage;
+export default React.memo(SliderImage);
