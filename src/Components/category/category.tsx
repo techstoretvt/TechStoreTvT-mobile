@@ -89,138 +89,84 @@ import styles from './category_styles';
 // ];
 
 interface CategoryItem {
-    id: string;
-    nameTypeProduct: string;
-    nameTypeProductEn: string;
-    imageTypeProduct: string;
-    stt: number;
-    createdAt: string;
-    updatedAt: string;
+  id: string;
+  nameTypeProduct: string;
+  nameTypeProductEn: string;
+  imageTypeProduct: string;
+  stt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface CategoryProps {
-    data: CategoryItem[];
+  data: CategoryItem[];
 }
 
 const Category = ({ data }: CategoryProps) => {
-    const renderGroups = (array: CategoryItem[], groupSize: number) => {
-        let arrTemp = [...array];
-        const groups = [];
-        while (arrTemp.length > 0) {
-            groups.push(arrTemp.splice(0, groupSize));
-        }
+  const renderGroups = (array: CategoryItem[], groupSize: number) => {
+    let arrTemp = [...array];
+    const groups = [];
+    while (arrTemp.length > 0) {
+      groups.push(arrTemp.splice(0, groupSize));
+    }
 
-        return groups.map((group, index) => (
-            <View key={index} style={styles.category_wrap_item}>
-                {group.map((item: CategoryItem, index2) => (
-                    <View key={index2} style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: item.imageTypeProduct,
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text style={styles.category_item_wrap_text_text}>
-                                {item.nameTypeProduct}
-                            </Text>
-                        </View>
-                    </View>
-                ))}
-            </View>
-        ));
-    };
-
-    return (
-        <View style={styles.category_container}>
-            <Swiper
-                showsButtons={true}
-                style={styles.slider}
-                horizontal={true}
-                autoplay={false}
-                dotColor="#fff"
-                showsPagination={false}
-                // autoplayTimeout={4}
-                removeClippedSubviews={false}
-                // eslint-disable-next-line react-native/no-inline-styles
-                paginationStyle={{
-                    bottom: 0,
+    return groups.map((group, index) => (
+      <View key={index} style={styles.category_wrap_item}>
+        {group.map((item: CategoryItem, index2) => (
+          <View key={index2} style={styles.category_item}>
+            <View style={styles.category_item_wrap_image}>
+              <Image
+                style={styles.category_item_image}
+                source={{
+                  uri: item.imageTypeProduct,
                 }}
-                loop={false}
-            >
-                {renderGroups(data, 8)}
-                {/* <View style={styles.category_wrap_item}>
-                    <View style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: 'https://source.unsplash.com/random?sig=17',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text>text</Text>
-                        </View>
-                    </View>
-                    <View style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: 'https://source.unsplash.com/random?sig=17',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text>text</Text>
-                        </View>
-                    </View>
-                    <View style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: 'https://source.unsplash.com/random?sig=17',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text>text</Text>
-                        </View>
-                    </View>
-                    <View style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: 'https://source.unsplash.com/random?sig=17',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text>text</Text>
-                        </View>
-                    </View>
-                    <View style={styles.category_item}>
-                        <View style={styles.category_item_wrap_image}>
-                            <Image
-                                style={styles.category_item_image}
-                                source={{
-                                    uri: 'https://source.unsplash.com/random?sig=17',
-                                }}
-                            />
-                        </View>
-                        <View style={styles.category_item_wrap_text}>
-                            <Text>text</Text>
-                        </View>
-                    </View>
-                </View> */}
-            </Swiper>
+              />
+            </View>
+            <View style={styles.category_item_wrap_text}>
+              <Text style={styles.category_item_wrap_text_text}>{item.nameTypeProduct}</Text>
+            </View>
+          </View>
+        ))}
+        {/* <Text>{index}</Text> */}
+      </View>
+    ));
+  };
+
+  return (
+    <View style={styles.category_container}>
+      {data?.length > 0 && (
+        <Swiper
+          showsButtons={true}
+          // style={styles.slider}
+          horizontal={true}
+          // autoplay={true}
+          dotColor="#ccc"
+          // showsPagination={false}
+          // autoplayTimeout={2}
+          removeClippedSubviews={false}
+          // eslint-disable-next-line react-native/no-inline-styles
+          paginationStyle={{
+            bottom: 4,
+          }}
+          // index={1}
+          loop={false}
+        >
+          {renderGroups(data, 8)}
+        </Swiper>
+      )}
+      {/* <Swiper showsButtons={true}>
+        <View>
+          <Text>Hello Swiper</Text>
         </View>
-    );
+        <View>
+          <Text>Beautiful</Text>
+        </View>
+        <View>
+          <Text>And simple</Text>
+        </View>
+      </Swiper> */}
+    </View>
+  );
 };
 
 export default React.memo(Category);

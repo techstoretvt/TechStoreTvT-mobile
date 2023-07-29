@@ -7,7 +7,13 @@ import { Slider } from '@rneui/themed';
 
 import styles from './home_screen_styles';
 import CountDown from 'react-native-countdown-component';
-import { getSuggestProduct, getAllTypeProduct } from '../../services/api';
+import Swiper from 'react-native-swiper';
+import {
+  getSuggestProduct,
+  getAllTypeProduct,
+  getListEventService,
+  getListPromotionProductService,
+} from '../../services/api';
 
 import Background from '../../components/background/background';
 import SliderImage from '../../components/slider_image/slider_image';
@@ -29,15 +35,35 @@ const HomeScreen = () => {
   const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>([]);
   const [listDiscard, setListDiscard] = React.useState([]);
   const [listCategory, setListCategory] = React.useState([]);
+  const [listEvent, setListEvent] = React.useState([]);
+  const [listPromotionProduct, setListPromotionProduct] = React.useState<typeProdutView[]>([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoadMore, setIsLoadMore] = React.useState(false);
 
   React.useEffect(() => {
     handleGetSuggestProduct();
     handleGetAllTypeProduct();
+    getListEvent();
+    getListPromotionProduct();
     return () => {
       console.log('goi lai');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setListDiscard([]);
+      setListSuggest([]);
+      setListCategory([]);
+      setListEvent([]);
+      setListPromotionProduct([]);
+      handleGetSuggestProduct();
+      handleGetAllTypeProduct();
+      getListEvent();
+      getListPromotionProduct();
+    }, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,18 +79,6 @@ const HomeScreen = () => {
     setIsLoadMore(false);
   };
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setListDiscard([]);
-      setListSuggest([]);
-      setListCategory([]);
-      handleGetSuggestProduct();
-      handleGetAllTypeProduct();
-    }, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const getMoreSuggest = () => {
     setIsLoadMore(true);
     handleGetSuggestProduct();
@@ -76,6 +90,20 @@ const HomeScreen = () => {
       setListCategory(res.data);
     } else {
       console.log(res.errMessage);
+    }
+  };
+
+  const getListEvent = async () => {
+    let res = await getListEventService();
+    if (res?.errCode === 0) {
+      setListEvent(res.data);
+    }
+  };
+
+  const getListPromotionProduct = async () => {
+    let res = await getListPromotionProductService();
+    if (res?.errCode === 0) {
+      setListPromotionProduct(res.data);
     }
   };
 
@@ -95,7 +123,9 @@ const HomeScreen = () => {
                 <View style={styles.carousel_header_wrap_header}>
                   <HeaderHome />
                 </View>
-                <SliderImage listImages={listImages} height={200} />
+                <View style={styles.carousel_header_content_slider}>
+                  <SliderImage listImages={listEvent} height={140} />
+                </View>
               </View>
             </View>
 
@@ -133,7 +163,7 @@ const HomeScreen = () => {
             {/* firstAdvertisement */}
             <View style={styles.firstAdvertisement_container}>
               <ImageBackground
-                source={require('../../assets/images/HomeScreen/banner.png')}
+                source={require('../../assets/images/HomeScreen/firstAdvertisement1.webp')}
                 style={styles.firstAdvertisement_container_wrap}
               >
                 <View style={styles.firstAdvertisement_container_wrap_btn}>
@@ -144,7 +174,7 @@ const HomeScreen = () => {
                 </View>
               </ImageBackground>
               <ImageBackground
-                source={require('../../assets/images/HomeScreen/banner.png')}
+                source={require('../../assets/images/HomeScreen/firstAdvertisement2.webp')}
                 style={[styles.firstAdvertisement_container_wrap, styles.firstAdvertisement_container_wrap.mid]}
               >
                 <View style={styles.firstAdvertisement_container_wrap_label}>
@@ -181,7 +211,7 @@ const HomeScreen = () => {
                 </View>
               </ImageBackground>
               <ImageBackground
-                source={require('../../assets/images/HomeScreen/banner.png')}
+                source={require('../../assets/images/HomeScreen/firstAdvertisement3.webp')}
                 style={styles.firstAdvertisement_container_wrap}
               >
                 <View style={styles.firstAdvertisement_container_wrap_btn}>
@@ -204,7 +234,7 @@ const HomeScreen = () => {
                 />
                 <Image
                   source={{
-                    uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
+                    uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-3.9e03e8b0.webp',
                   }}
                   style={styles.secondAdvertisement_content_image}
                 />
@@ -248,258 +278,92 @@ const HomeScreen = () => {
                 </View>
               </View>
               <ScrollView style={styles.promotionProduct_listProduct} horizontal={true}>
-                <View style={styles.promotionProduct_listProduct_product}>
-                  <ImageBackground
-                    source={{
-                      uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
-                    }}
-                    style={styles.promotionProduct_listProduct_product_wrapImage}
-                  >
-                    <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
+                {listPromotionProduct?.map(item => (
+                  <View style={styles.promotionProduct_listProduct_product} key={item.id}>
+                    <ImageBackground
+                      source={{
+                        uri: item['imageProduct-product'][0]?.imagebase64,
+                      }}
+                      style={styles.promotionProduct_listProduct_product_wrapImage}
+                    >
+                      <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
+                        <Text
+                          // eslint-disable-next-line react-native/no-inline-styles
+                          style={{
+                            color: 'red',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {item?.promotionProducts[0].numberPercent}%
+                        </Text>
+                        <Text
+                          // eslint-disable-next-line react-native/no-inline-styles
+                          style={{
+                            color: '#fff',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Giam
+                        </Text>
+                      </View>
+
+                      <Image
+                        source={{
+                          uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
+                        }}
+                        style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
+                      />
+                    </ImageBackground>
+                    <View style={styles.promotionProduct_listProduct_product_price}>
+                      <Text style={{ color: 'red' }}>d</Text>
                       <Text
                         // eslint-disable-next-line react-native/no-inline-styles
                         style={{
                           color: 'red',
                           fontWeight: 'bold',
+                          fontSize: 16,
                         }}
                       >
-                        40%
-                      </Text>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Giam
+                        359.000
                       </Text>
                     </View>
-
-                    <Image
-                      source={{
-                        uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
-                      }}
-                      style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
-                    />
-                  </ImageBackground>
-                  <View style={styles.promotionProduct_listProduct_product_price}>
-                    <Text style={{ color: 'red' }}>d</Text>
-                    <Text
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        color: 'red',
-                        fontWeight: 'bold',
-                        fontSize: 16,
-                      }}
-                    >
-                      359.000
-                    </Text>
-                  </View>
-                  <View style={styles.promotionProduct_listProduct_product_sale}>
-                    <Slider
-                      value={1}
-                      // onValueChange={setValue}
-                      maximumValue={10}
-                      minimumValue={0}
-                      step={1}
-                      allowTouchTrack
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      trackStyle={{
-                        height: 20,
-                        backgroundColor: 'transparent',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      thumbStyle={{
-                        height: 20,
-                        // width: '100%',
-                        backgroundColor: 'transparent',
-                      }}
-                    />
-                    <View style={styles.promotionProduct_listProduct_product_sale_wrap_text}>
-                      <Text
+                    <View style={styles.promotionProduct_listProduct_product_sale}>
+                      <Slider
+                        value={1}
+                        // onValueChange={setValue}
+                        maximumValue={10}
+                        minimumValue={0}
+                        step={1}
+                        allowTouchTrack
                         // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: '800',
+                        trackStyle={{
+                          height: 20,
+                          backgroundColor: 'transparent',
+                          borderRadius: 10,
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }}
-                      >
-                        Da ban 20
-                      </Text>
+                        // eslint-disable-next-line react-native/no-inline-styles
+                        thumbStyle={{
+                          height: 20,
+                          // width: '100%',
+                          backgroundColor: 'transparent',
+                        }}
+                      />
+                      <View style={styles.promotionProduct_listProduct_product_sale_wrap_text}>
+                        <Text
+                          // eslint-disable-next-line react-native/no-inline-styles
+                          style={{
+                            color: '#fff',
+                            fontWeight: '800',
+                          }}
+                        >
+                          Da ban 20
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View style={styles.promotionProduct_listProduct_product}>
-                  <ImageBackground
-                    source={{
-                      uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
-                    }}
-                    style={styles.promotionProduct_listProduct_product_wrapImage}
-                  >
-                    <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: 'red',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        40%
-                      </Text>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Giam
-                      </Text>
-                    </View>
-
-                    <Image
-                      source={{
-                        uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
-                      }}
-                      style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
-                    />
-                  </ImageBackground>
-                  <View style={styles.promotionProduct_listProduct_product_price}>
-                    <Text style={{ color: 'red' }}>d</Text>
-                    <Text
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        color: 'red',
-                        fontWeight: 'bold',
-                        fontSize: 16,
-                      }}
-                    >
-                      359.000
-                    </Text>
-                  </View>
-                  <View style={styles.promotionProduct_listProduct_product_sale}>
-                    <Slider
-                      value={1}
-                      // onValueChange={setValue}
-                      maximumValue={10}
-                      minimumValue={0}
-                      step={1}
-                      allowTouchTrack
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      trackStyle={{
-                        height: 20,
-                        backgroundColor: 'transparent',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      thumbStyle={{
-                        height: 20,
-                        // width: '100%',
-                        backgroundColor: 'transparent',
-                      }}
-                    />
-                    <View style={styles.promotionProduct_listProduct_product_sale_wrap_text}>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: '800',
-                        }}
-                      >
-                        Da ban 20
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.promotionProduct_listProduct_product}>
-                  <ImageBackground
-                    source={{
-                      uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
-                    }}
-                    style={styles.promotionProduct_listProduct_product_wrapImage}
-                  >
-                    <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: 'red',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        40%
-                      </Text>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Giam
-                      </Text>
-                    </View>
-
-                    <Image
-                      source={{
-                        uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
-                      }}
-                      style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
-                    />
-                  </ImageBackground>
-                  <View style={styles.promotionProduct_listProduct_product_price}>
-                    <Text style={{ color: 'red' }}>d</Text>
-                    <Text
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        color: 'red',
-                        fontWeight: 'bold',
-                        fontSize: 16,
-                      }}
-                    >
-                      359.000
-                    </Text>
-                  </View>
-                  <View style={styles.promotionProduct_listProduct_product_sale}>
-                    <Slider
-                      value={1}
-                      // onValueChange={setValue}
-                      maximumValue={10}
-                      minimumValue={0}
-                      step={1}
-                      allowTouchTrack
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      trackStyle={{
-                        height: 20,
-                        backgroundColor: 'transparent',
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      thumbStyle={{
-                        height: 20,
-                        // width: '100%',
-                        backgroundColor: 'transparent',
-                      }}
-                    />
-                    <View style={styles.promotionProduct_listProduct_product_sale_wrap_text}>
-                      <Text
-                        // eslint-disable-next-line react-native/no-inline-styles
-                        style={{
-                          color: '#fff',
-                          fontWeight: '800',
-                        }}
-                      >
-                        Da ban 20
-                      </Text>
-                    </View>
-                  </View>
-                </View>
+                ))}
               </ScrollView>
             </View>
 
@@ -526,7 +390,30 @@ const HomeScreen = () => {
                 </View>
               </View>
               <View style={styles.finallyAdvertisement_wrapSlider}>
-                <SliderImage listImages={listImages} height={120} showsPagination={false} />
+                {/* <SliderImage listImages={listEvent} height={120} showsPagination={false} /> */}
+                <Swiper
+                  showsButtons={false}
+                  // style={[styles.swiper, { height }]}
+                  horizontal={true}
+                  autoplay={true}
+                  dotColor="#fff"
+                  autoplayTimeout={4}
+                  removeClippedSubviews={false}
+                  showsPagination={true}
+                  // automaticallyAdjustContentInsets={true}
+                >
+                  {listImages?.map((img, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        style={styles.finallyAdvertisement_wrapSlider_image}
+                        source={{
+                          uri: img,
+                        }}
+                      />
+                    );
+                  })}
+                </Swiper>
               </View>
             </View>
 
