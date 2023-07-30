@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, Image, StatusBar } from 'react-native';
+import { View, Image } from 'react-native';
 import React from 'react';
 import styles from './slider_image_styles';
 import Swiper from 'react-native-swiper';
@@ -10,7 +10,6 @@ function SliderImage({ listImages, height = 200, showsPagination = true }) {
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
-        <StatusBar translucent backgroundColor="transparent" />
         <Swiper
           showsButtons={false}
           style={[styles.swiper, { height }]}
@@ -18,7 +17,7 @@ function SliderImage({ listImages, height = 200, showsPagination = true }) {
           autoplay={true}
           dotColor="#fff"
           autoplayTimeout={4}
-          removeClippedSubviews={false}
+          // removeClippedSubviews={false}
           showsPagination={showsPagination}
           // automaticallyAdjustContentInsets={true}
         >

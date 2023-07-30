@@ -136,14 +136,14 @@ const Category = ({ data }: CategoryProps) => {
     <View style={styles.category_container}>
       {data?.length > 0 && (
         <Swiper
-          showsButtons={true}
+          showsButtons={false}
           // style={styles.slider}
           horizontal={true}
           // autoplay={true}
           dotColor="#ccc"
           // showsPagination={false}
           // autoplayTimeout={2}
-          removeClippedSubviews={false}
+          // removeClippedSubviews={false}
           // eslint-disable-next-line react-native/no-inline-styles
           paginationStyle={{
             bottom: 4,

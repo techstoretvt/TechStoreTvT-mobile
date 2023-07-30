@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   carousel_header_wrap_header: {
     position: 'absolute',
     zIndex: 1,
-    top: Platform.OS === 'ios' ? 0 : 26,
-    marginTop: 10,
+    // top: Platform.OS === 'ios' ? 0 : 26,
+    // marginTop: 10,
   },
   carousel_header_content_slider: {
     paddingTop: 80,

@@ -1,27 +1,33 @@
 {
-    "printWidth": 120,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
-    "trailingComma": "all",
-    "singleQuote": true,
-    "jsxBracketSameLine": false,
-    "arrowParens": "avoid",
-    "proseWrap": "always",
-    "endOfLine": "lf",
-    "embeddedLanguages": {
-      "typescript": true
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "avoid",
+  "proseWrap": "always",
+  "endOfLine": "lf",
+  "embeddedLanguages": {
+    "typescript": true
+  },
+  "overrides": [
+    {
+      "files": "**/*.json",
+      "options": {
+        "parser": "json"
+      }
     },
-    "overrides": [
-      {
-        "files": "**/*.json",
-        "options": {
-          "parser": "json"
-        }
+    {
+      "files": "**/*.jsx",
+      "options": {
+        "jsxBracketSameLine": true,
+        "parser": "babylon"
       }
-     
-    ],
-    "rules": {
-        "react/jsx-no-inline-styles": "off"
-      }
+    }
+  ],
+  "rules": {
+    "react/jsx-no-inline-styles": "off"
   }
+}

@@ -4,6 +4,7 @@ import React from 'react';
 // import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Slider } from '@rneui/themed';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import styles from './home_screen_styles';
 import CountDown from 'react-native-countdown-component';
@@ -21,6 +22,7 @@ import HeaderHome from '../../components/header_home/header_home';
 import Category from '../../components/category/category';
 import CardProduct from '../../components/card_product/card_product';
 import { typeProdutView } from '../../utils/interface';
+import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
 
 const listImages = [
   'https://source.unsplash.com/random?sig=1',
@@ -32,6 +34,8 @@ const listImages = [
 ];
 
 const HomeScreen = () => {
+  const insets = useSafeAreaInsets();
+
   const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>([]);
   const [listDiscard, setListDiscard] = React.useState([]);
   const [listCategory, setListCategory] = React.useState([]);
@@ -110,6 +114,12 @@ const HomeScreen = () => {
   return (
     <>
       <FlatList
+        // style={{
+        //   paddingTop: insets.top,
+        //   paddingBottom: insets.bottom,
+        //   paddingLeft: insets.left,
+        //   paddingRight: insets.right,
+        // }}
         data={listSuggest}
         horizontal={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -119,12 +129,13 @@ const HomeScreen = () => {
           <View>
             {/* header */}
             <View style={styles.carousel_header_container}>
+              <FocusAwareStatusBar translucent backgroundColor="transparent" />
               <View style={styles.carousel_header_content}>
-                <View style={styles.carousel_header_wrap_header}>
+                <View style={[styles.carousel_header_wrap_header, { top: insets.top }]}>
                   <HeaderHome />
                 </View>
-                <View style={styles.carousel_header_content_slider}>
-                  <SliderImage listImages={listEvent} height={140} />
+                <View style={[styles.carousel_header_content_slider, { paddingTop: insets.top + 50 }]}>
+                  <SliderImage listImages={listEvent} height={130} />
                 </View>
               </View>
             </View>
@@ -398,7 +409,7 @@ const HomeScreen = () => {
                   autoplay={true}
                   dotColor="#fff"
                   autoplayTimeout={4}
-                  removeClippedSubviews={false}
+                  // removeClippedSubviews={false}
                   showsPagination={true}
                   // automaticallyAdjustContentInsets={true}
                 >
