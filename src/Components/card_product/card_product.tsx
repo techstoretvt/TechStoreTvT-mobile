@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { View, Text, ImageBackground, Image } from 'react-native';
 import React from 'react';
+import { Skeleton } from '@rneui/themed';
 
 import styles from './card_product_styles';
 import { typeProdutView } from '../../utils/interface';
@@ -48,6 +49,16 @@ const CardProduct = ({ data }: propsTypes) => {
     let price = (rootPrice * (100 - data.promotionProducts[0].numberPercent)) / 100;
     return price;
   };
+
+  if (!data || data.id === 'empty') {
+    return (
+      <View>
+        <Skeleton animation="wave" height={160} />
+        <Skeleton animation="wave" height={28} style={{ marginVertical: 4 }} />
+        <Skeleton animation="wave" height={20} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.CardProduct_container}>

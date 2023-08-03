@@ -61,4 +61,59 @@ const getListPromotionProductService = async () => {
   }
 };
 
-export { getSuggestProduct, getAllTypeProduct, getListEventService, getListPromotionProductService };
+const getListMayLikeService = async ({ idProductCurrent, nameTypeProduct }) => {
+  try {
+    return await axios.get('/api/v1/get-list-product-may-like', {
+      params: { id: idProductCurrent, nameTypeProduct },
+    });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getProductByIdService = async idProduct => {
+  try {
+    return await axios.get('/api/v1/get-product-by-id', {
+      params: { idProduct },
+    });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+const getEvaluateProductByIdProduct = async data => {
+  try {
+    return await axios.get('/api/v1/get-evaluate-by-id-product', {
+      params: data,
+    });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+export {
+  getSuggestProduct,
+  getAllTypeProduct,
+  getListEventService,
+  getListPromotionProductService,
+  getListMayLikeService,
+  getProductByIdService,
+  getEvaluateProductByIdProduct,
+};

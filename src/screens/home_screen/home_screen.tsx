@@ -1,5 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, Image, ImageBackground, ScrollView, Alert, RefreshControl, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  ScrollView,
+  Alert,
+  RefreshControl,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 // import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -24,6 +34,9 @@ import CardProduct from '../../components/card_product/card_product';
 import { typeProdutView } from '../../utils/interface';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
 
+interface HomeScreenProps {
+  navigation: any;
+}
 const listImages = [
   'https://source.unsplash.com/random?sig=1',
   'https://source.unsplash.com/random?sig=2',
@@ -33,10 +46,65 @@ const listImages = [
   'https://source.unsplash.com/random?sig=6',
 ];
 
-const HomeScreen = () => {
+const defaultListSuggestProduct_item: typeProdutView = {
+  id: 'empty',
+  nameProduct: 'string',
+  priceProduct: 'string',
+  contentHTML: 'string',
+  sold: 0,
+  isSell: 'string',
+  trademark: {
+    nameTrademark: 'string',
+    nameTrademarkEn: 'string',
+    idTypeProduct: 'string',
+  },
+  promotionProducts: [
+    {
+      idProduct: 'string',
+      timePromotion: 0,
+      numberPercent: 0,
+    },
+  ],
+  'imageProduct-product': [
+    {
+      idProduct: 'string',
+      STTImage: 0,
+      imagebase64: 'string',
+    },
+  ],
+  'classifyProduct-product': [
+    {
+      id: 'string',
+      idProduct: 'string',
+      amount: 0,
+      STTImg: 0,
+      nameClassifyProduct: 'string',
+      priceClassify: 0,
+    },
+  ],
+  typeProduct: {
+    nameTypeProduct: 'string',
+    nameTypeProductEn: 'string',
+    imageTypeProduct: 'string',
+    stt: 0,
+  },
+};
+
+const defaultListSuggestProduct: typeProdutView[] = [
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+];
+
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const insets = useSafeAreaInsets();
 
-  const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>([]);
+  const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>(defaultListSuggestProduct);
   const [listDiscard, setListDiscard] = React.useState([]);
   const [listCategory, setListCategory] = React.useState([]);
   const [listEvent, setListEvent] = React.useState([]);
@@ -74,10 +142,17 @@ const HomeScreen = () => {
   const handleGetSuggestProduct = async () => {
     let res = await getSuggestProduct(listDiscard);
     if (res?.errCode === 0) {
-      let newListDiscards = res.data.map((item: any) => item.id);
-      newListDiscards = [...listDiscard, ...newListDiscards];
-      setListDiscard(newListDiscards);
-      setListSuggest([...listSuggest, ...res.data]);
+      if (listSuggest.length === 8) {
+        let newListDiscards = res.data.map((item: any) => item.id);
+        newListDiscards = [...newListDiscards];
+        setListSuggest([...res.data]);
+        setListDiscard(newListDiscards);
+      } else {
+        let newListDiscards = res.data.map((item: any) => item.id);
+        newListDiscards = [...listDiscard, ...newListDiscards];
+        setListDiscard(newListDiscards);
+        setListSuggest([...listSuggest, ...res.data]);
+      }
     }
     setRefreshing(false);
     setIsLoadMore(false);
@@ -114,12 +189,6 @@ const HomeScreen = () => {
   return (
     <>
       <FlatList
-        // style={{
-        //   paddingTop: insets.top,
-        //   paddingBottom: insets.bottom,
-        //   paddingLeft: insets.left,
-        //   paddingRight: insets.right,
-        // }}
         data={listSuggest}
         horizontal={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -291,40 +360,43 @@ const HomeScreen = () => {
               <ScrollView style={styles.promotionProduct_listProduct} horizontal={true}>
                 {listPromotionProduct?.map(item => (
                   <View style={styles.promotionProduct_listProduct_product} key={item.id}>
-                    <ImageBackground
-                      source={{
-                        uri: item['imageProduct-product'][0]?.imagebase64,
-                      }}
-                      style={styles.promotionProduct_listProduct_product_wrapImage}
-                    >
-                      <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
-                        <Text
-                          // eslint-disable-next-line react-native/no-inline-styles
-                          style={{
-                            color: 'red',
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          {item?.promotionProducts[0].numberPercent}%
-                        </Text>
-                        <Text
-                          // eslint-disable-next-line react-native/no-inline-styles
-                          style={{
-                            color: '#fff',
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          Giam
-                        </Text>
-                      </View>
-
-                      <Image
+                    <TouchableOpacity onPress={() => navigation.navigate('DetailProduct')}>
+                      <ImageBackground
                         source={{
-                          uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
+                          uri: item['imageProduct-product'][0]?.imagebase64,
                         }}
-                        style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
-                      />
-                    </ImageBackground>
+                        style={styles.promotionProduct_listProduct_product_wrapImage}
+                      >
+                        <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
+                          <Text
+                            // eslint-disable-next-line react-native/no-inline-styles
+                            style={{
+                              color: 'red',
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {item?.promotionProducts[0].numberPercent}%
+                          </Text>
+                          <Text
+                            // eslint-disable-next-line react-native/no-inline-styles
+                            style={{
+                              color: '#fff',
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            Giam
+                          </Text>
+                        </View>
+
+                        <Image
+                          source={{
+                            uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
+                          }}
+                          style={styles.promotionProduct_listProduct_product_wrapImage_label_logo}
+                        />
+                      </ImageBackground>
+                    </TouchableOpacity>
+
                     <View style={styles.promotionProduct_listProduct_product_price}>
                       <Text style={{ color: 'red' }}>d</Text>
                       <Text
@@ -434,7 +506,7 @@ const HomeScreen = () => {
             </View>
           </View>
         }
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => index + item.id}
         renderItem={({ item }) => (
           <View style={styles.suggestion_container_listProduct_wrapProduct}>
             <CardProduct data={item} />

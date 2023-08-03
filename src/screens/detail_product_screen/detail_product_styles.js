@@ -39,11 +39,10 @@ const styles = StyleSheet.create({
   },
   wrapImages: {
     aspectRatio: 1 / 0.9,
-    borderWidth: 2,
-    borderColor: 'red',
   },
   wrapImages_image: {
     height: '100%',
+    backgroundColor: '#000',
   },
   content: {
     padding: 6,
@@ -89,6 +88,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: 15,
     marginLeft: 10,
+    textTransform: 'capitalize',
   },
   content_evaluate: {},
   content_evaluate_empty: {},
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   content_priceRoot: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 6,
   },
   content_priceRoot_price: {
     textDecorationLine: 'line-through',
@@ -210,12 +211,150 @@ const styles = StyleSheet.create({
   },
   discription_title: {
     fontWeight: '700',
-    fontSize: 18,
+    fontSize: 17,
     color: '#000',
     textDecorationLine: 'underline',
   },
   discription_content: {
     marginTop: 10,
+    height: 200,
+    overflow: 'hidden',
+  },
+  discription_more: {
+    alignItems: 'center',
+  },
+  discription_more_text: {
+    color: 'red',
+    borderTopWidth: 1,
+    paddingHorizontal: 20,
+  },
+  evaluate: {
+    backgroundColor: '#fff',
+    marginTop: 10,
+    paddingVertical: 10,
+  },
+  evaluate_header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  evaluate_header_left: {},
+  evaluate_header_left_title: {
+    color: '#000',
+    fontSize: 17,
+    fontWeight: '700',
+  },
+  evaluate_header_left_wrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  evaluate_header_left_wrap_star: {},
+  evaluate_header_left_wrap_persent: {
+    marginHorizontal: 4,
+    color: 'red',
+  },
+  evaluate_header_left_wrap_amount: {},
+  evaluate_header_right: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  evaluate_header_right_more: {
+    color: 'red',
+    marginRight: 4,
+  },
+  evaluate_header_right_icon: {},
+  evaluate_list: {},
+  evaluate_list_group: {
+    flexDirection: 'row',
+    marginTop: 10,
+    paddingHorizontal: 6,
+  },
+  evaluate_list_avatar: {
+    marginRight: 10,
+  },
+  evaluate_list_content: {
+    flex: 1,
+  },
+  evaluate_list_content_name: {
+    color: '#000',
+    fontWeight: '600',
+  },
+  evaluate_list_content_star: {
+    marginLeft: -4,
+    marginTop: 4,
+    flexDirection: 'row',
+  },
+  evaluate_list_content_trademark: {
+    marginTop: 4,
+  },
+  evaluate_list_content_text: {
+    color: '#000',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+  evaluate_list_content_media: {
+    marginTop: 6,
+  },
+  evaluate_list_content_media_wrapVideo: {
+    backgroundColor: '#333',
+    marginRight: 6,
+  },
+  evaluate_list_content_media_wrapVideo_video: {
+    width: 100,
+    height: 100,
+  },
+  evaluate_list_content_media_listImage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  evaluate_list_content_media_listImage_image: {
+    width: 100,
+    height: 100,
+    marginRight: 6,
+    flexShrink: 0,
+  },
+  evaluate_more: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  evaluate_more_text: {
+    color: 'red',
+    marginRight: 6,
+  },
+  suggestions: {
+    marginTop: 20,
+  },
+  suggestions_header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  suggestions_header_sparate: {
+    width: 50,
+    borderBottomWidth: 1,
+  },
+  suggestions_header_text: {
+    fontWeight: '700',
+    color: '#000',
+    fontSize: 16,
+    marginHorizontal: 10,
+  },
+  suggestions_listProduct: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    minHeight: 200,
+    marginTop: 10,
+  },
+  suggestions_listProduct_item: {
+    width: '50%',
+    minHeight: 100,
+    padding: 6,
   },
 });
 

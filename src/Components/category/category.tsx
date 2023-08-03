@@ -2,6 +2,7 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
 import Swiper from 'react-native-swiper';
+import { Skeleton } from '@rneui/themed';
 
 import styles from './category_styles';
 
@@ -104,6 +105,23 @@ interface CategoryProps {
 
 const Category = ({ data }: CategoryProps) => {
   const renderGroups = (array: CategoryItem[], groupSize: number) => {
+    if (array.length === 0) {
+      const arrayTam = [];
+      for (let i = 0; i < groupSize; i++) {
+        arrayTam.push(i);
+      }
+      return (
+        <View style={styles.category_wrap_item}>
+          {arrayTam.map(item => (
+            <View key={item} style={styles.category_item}>
+              <View style={[styles.category_item_wrap_image, { padding: 4 }]}>
+                <Skeleton animation="wave" height={80} />
+              </View>
+            </View>
+          ))}
+        </View>
+      );
+    }
     let arrTemp = [...array];
     const groups = [];
     while (arrTemp.length > 0) {
@@ -134,37 +152,26 @@ const Category = ({ data }: CategoryProps) => {
 
   return (
     <View style={styles.category_container}>
-      {data?.length > 0 && (
-        <Swiper
-          showsButtons={false}
-          // style={styles.slider}
-          horizontal={true}
-          // autoplay={true}
-          dotColor="#ccc"
-          // showsPagination={false}
-          // autoplayTimeout={2}
-          // removeClippedSubviews={false}
-          // eslint-disable-next-line react-native/no-inline-styles
-          paginationStyle={{
-            bottom: 4,
-          }}
-          // index={1}
-          loop={false}
-        >
-          {renderGroups(data, 8)}
-        </Swiper>
-      )}
-      {/* <Swiper showsButtons={true}>
-        <View>
-          <Text>Hello Swiper</Text>
-        </View>
-        <View>
-          <Text>Beautiful</Text>
-        </View>
-        <View>
-          <Text>And simple</Text>
-        </View>
-      </Swiper> */}
+      {/* {data?.length > 0 && ( */}
+      <Swiper
+        showsButtons={false}
+        // style={styles.slider}
+        horizontal={true}
+        // autoplay={true}
+        dotColor="#ccc"
+        // showsPagination={false}
+        // autoplayTimeout={2}
+        // removeClippedSubviews={false}
+        // eslint-disable-next-line react-native/no-inline-styles
+        paginationStyle={{
+          bottom: 4,
+        }}
+        // index={1}
+        loop={false}
+      >
+        {renderGroups(data, 8)}
+      </Swiper>
+      {/* )} */}
     </View>
   );
 };

@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 export interface typeProdutView {
+  contentHTML: string;
   id: string;
   nameProduct: string;
   priceProduct: string;
