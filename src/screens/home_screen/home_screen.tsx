@@ -113,15 +113,20 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [isLoadMore, setIsLoadMore] = React.useState(false);
 
   React.useEffect(() => {
-    handleGetSuggestProduct();
-    handleGetAllTypeProduct();
-    getListEvent();
-    getListPromotionProduct();
+    init();
     return () => {
       console.log('goi lai');
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const init = async () => {
+    getListEvent();
+    await handleGetAllTypeProduct();
+    setRefreshing(false);
+    await getListPromotionProduct();
+    handleGetSuggestProduct();
+  };
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -131,10 +136,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       setListCategory([]);
       setListEvent([]);
       setListPromotionProduct([]);
-      handleGetSuggestProduct();
-      handleGetAllTypeProduct();
-      getListEvent();
-      getListPromotionProduct();
+      init();
     }, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -154,7 +156,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         setListSuggest([...listSuggest, ...res.data]);
       }
     }
-    setRefreshing(false);
+
     setIsLoadMore(false);
   };
 
@@ -360,7 +362,13 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
               <ScrollView style={styles.promotionProduct_listProduct} horizontal={true}>
                 {listPromotionProduct?.map(item => (
                   <View style={styles.promotionProduct_listProduct_product} key={item.id}>
-                    <TouchableOpacity onPress={() => navigation.navigate('DetailProduct')}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.push('DetailProduct', {
+                          idProduct: item.id,
+                        })
+                      }
+                    >
                       <ImageBackground
                         source={{
                           uri: item['imageProduct-product'][0]?.imagebase64,
@@ -509,7 +517,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         keyExtractor={(item, index) => index + item.id}
         renderItem={({ item }) => (
           <View style={styles.suggestion_container_listProduct_wrapProduct}>
-            <CardProduct data={item} />
+            <CardProduct data={item} navigation={navigation} />
           </View>
         )}
         numColumns={2}

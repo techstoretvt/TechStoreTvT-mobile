@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ImageBackground, Image } from 'react-native';
+import { View, Text, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Skeleton } from '@rneui/themed';
 
@@ -9,9 +9,10 @@ import { formatNumber, formatNumberToThousands } from '../../utils/common';
 
 interface propsTypes {
   data: typeProdutView;
+  navigation: any;
 }
 
-const CardProduct = ({ data }: propsTypes) => {
+const CardProduct = ({ data, navigation }: propsTypes) => {
   const checkPromotion = (promotion: { timePromotion: number; numberPercent: number }) => {
     if (!promotion) {
       return false;
@@ -62,47 +63,63 @@ const CardProduct = ({ data }: propsTypes) => {
 
   return (
     <View style={styles.CardProduct_container}>
-      <ImageBackground
-        style={styles.CardProduct_container_wrapImage}
-        source={{
-          uri: data && data['imageProduct-product'] && data['imageProduct-product'][0].imagebase64,
-        }}
+      <TouchableOpacity
+        onPress={() =>
+          navigation.push('DetailProduct', {
+            idProduct: data?.id,
+          })
+        }
       >
-        <View style={styles.CardProduct_container_wrapImage_logo}>
-          <Image
-            style={styles.CardProduct_container_wrapImage_logo_image}
-            source={{
-              uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
-            }}
-          />
-        </View>
-        <View style={styles.CardProduct_container_wrapImage_like}>
-          <Text
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              color: '#fff',
-              fontWeight: '800',
-            }}
-          >
-            Yêu thích
-          </Text>
-        </View>
-        {data && data.promotionProducts && checkPromotion(data.promotionProducts[0]) && (
-          <View style={styles.CardProduct_container_wrapImage_promotion}>
-            <Text style={styles.CardProduct_container_wrapImage_promotion_text1}>Giảm</Text>
-            <Text style={styles.CardProduct_container_wrapImage_promotion_text2}>
-              {data.promotionProducts[0].numberPercent}
+        <ImageBackground
+          style={styles.CardProduct_container_wrapImage}
+          source={{
+            uri: data && data['imageProduct-product'] && data['imageProduct-product'][0].imagebase64,
+          }}
+        >
+          <View style={styles.CardProduct_container_wrapImage_logo}>
+            <Image
+              style={styles.CardProduct_container_wrapImage_logo_image}
+              source={{
+                uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Flogo%2Flogo-full.webp&w=128&q=75',
+              }}
+            />
+          </View>
+          <View style={styles.CardProduct_container_wrapImage_like}>
+            <Text
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                color: '#fff',
+                fontWeight: '800',
+              }}
+            >
+              Yêu thích
             </Text>
           </View>
-        )}
-      </ImageBackground>
+          {data && data.promotionProducts && checkPromotion(data.promotionProducts[0]) && (
+            <View style={styles.CardProduct_container_wrapImage_promotion}>
+              <Text style={styles.CardProduct_container_wrapImage_promotion_text1}>Giảm</Text>
+              <Text style={styles.CardProduct_container_wrapImage_promotion_text2}>
+                {data.promotionProducts[0].numberPercent}
+              </Text>
+            </View>
+          )}
+        </ImageBackground>
+      </TouchableOpacity>
       <View style={styles.CardProduct_container_trademark}>
         <Text style={styles.CardProduct_container_trademark_text}>{data?.trademark?.nameTrademark}</Text>
       </View>
       <View style={styles.CardProduct_container_nameProduct}>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.CardProduct_container_nameProduct_text}>
-          {data?.nameProduct}
-        </Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.push('DetailProduct', {
+              idProduct: data?.id,
+            })
+          }
+        >
+          <Text numberOfLines={2} ellipsizeMode="tail" style={styles.CardProduct_container_nameProduct_text}>
+            {data?.nameProduct}
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.CardProduct_container_priceCurrent}>
         <Text style={styles.CardProduct_container_priceCurrent_text}>

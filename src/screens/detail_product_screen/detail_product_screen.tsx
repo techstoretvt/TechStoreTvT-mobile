@@ -8,6 +8,8 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
+  TouchableWithoutFeedback,
+  RefreshControl,
 } from 'react-native';
 import React from 'react';
 import ImageView from 'react-native-image-viewing';
@@ -28,23 +30,22 @@ import { REACT_APP_URL_FRONTEND } from '../../utils/constant';
 
 const windowWidth = Dimensions.get('window').width;
 
-const images = [
-  {
-    uri: 'https://source.unsplash.com/random?sig=1',
-  },
-  {
-    uri: 'https://source.unsplash.com/random?sig=2',
-  },
-  {
-    uri: 'https://source.unsplash.com/random?sig=3',
-  },
-  {
-    uri: 'https://source.unsplash.com/random?sig=4',
-  },
-  {
-    uri: 'https://source.unsplash.com/random?sig=5',
-  },
-];
+//   {
+//     uri: 'https://source.unsplash.com/random?sig=1',
+//   },
+//   {
+//     uri: 'https://source.unsplash.com/random?sig=2',
+//   },
+//   {
+//     uri: 'https://source.unsplash.com/random?sig=3',
+//   },
+//   {
+//     uri: 'https://source.unsplash.com/random?sig=4',
+//   },
+//   {
+//     uri: 'https://source.unsplash.com/random?sig=5',
+//   },
+// ];
 
 const defaultListSuggestProduct_item: typeProdutView = {
   id: 'empty',
@@ -161,37 +162,63 @@ type listEvaluateType = {
   } | null;
 };
 
-const DetailProductScreen = () => {
+interface DetailProductScreenProps {
+  navigation: any;
+  route: any;
+}
+
+const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) => {
+  const params = route.params;
   const insets = useSafeAreaInsets();
   const scrollView = React.useRef(null);
 
   const [openLightBox, setOpenLightBox] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
   const [moreContent, setMoreContent] = React.useState(false);
   const [listSuggesProduct, setListSuggestProduct] = React.useState<typeProdutView[]>(defaultListSuggestProduct);
   const [infoProduct, setInfoProduct] = React.useState<typeProdutView | null>(null);
   const [indexClassify, setIndexClassify] = React.useState(0);
   const [listEvaluate, setListEvaluate] = React.useState<listEvaluateType[] | null>(null);
   const [infoEvaluate, setInfoEvaluate] = React.useState<inforEvaluateType | null>(null);
+  const [listImageLighBox, setListImageLightBox] = React.useState([]);
+  const [indexLightBox, setIndexLightBox] = React.useState(0);
 
-  let getSuggestProduct = React.useCallback(async () => {
-    let idProductCurrent = 'null';
-    let nameTypeProduct = 'điện thoại';
+  React.useEffect(() => {
+    if (params.idProduct) {
+      getInfoProduct();
+      getEvaluateProduct();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.idProduct]);
+
+  React.useEffect(() => {
+    if (infoProduct) {
+      getSuggestProduct();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [infoProduct]);
+
+  let getSuggestProduct = async () => {
+    let idProductCurrent = params.idProduct;
+    let nameTypeProduct = infoProduct?.typeProduct?.nameTypeProduct;
     let res = await getListMayLikeService({ idProductCurrent, nameTypeProduct });
     if (res?.errCode === 0) {
       setListSuggestProduct(res.data);
     }
-  }, []);
+  };
 
-  let getInfoProduct = React.useCallback(async () => {
-    let idProduct = '89fe302f-2c54-47cc-a4cc-739d30cb5cd3';
+  let getInfoProduct = async () => {
+    let idProduct = params.idProduct;
     let res = await getProductByIdService(idProduct);
     if (res?.errCode === 0) {
+      let imgs = res.data['imageProduct-product'].map((item: { imagebase64: string }) => ({ uri: item.imagebase64 }));
+      setListImageLightBox(imgs);
       setInfoProduct(res.data);
     }
-  }, []);
+  };
 
-  let getEvaluateProduct = React.useCallback(async () => {
-    let idProduct = '04b018d2-345e-41b9-b105-c373f2781b77';
+  let getEvaluateProduct = async () => {
+    let idProduct = params.idProduct;
     let fillter = 'all';
     let page = '1';
     let offset = 5;
@@ -211,19 +238,27 @@ const DetailProductScreen = () => {
         avgStar: res.avgStar,
       });
     }
-  }, []);
+  };
 
-  React.useEffect(() => {
-    getInfoProduct();
-  }, [getInfoProduct]);
-
-  React.useEffect(() => {
-    getSuggestProduct();
-  }, [getSuggestProduct]);
-
-  React.useEffect(() => {
+  const onRefresh = async () => {
+    setRefreshing(true);
+    resetState();
+    await getInfoProduct();
     getEvaluateProduct();
-  }, [getEvaluateProduct]);
+    getSuggestProduct();
+    setRefreshing(false);
+  };
+
+  const resetState = () => {
+    setInfoProduct(null);
+    setIndexClassify(0);
+    setListEvaluate(null);
+    setInfoEvaluate(null);
+    setListImageLightBox([]);
+    setIndexLightBox(0);
+    setOpenLightBox(false);
+    setListSuggestProduct(defaultListSuggestProduct);
+  };
 
   const getRootPrice = () => {
     if (!infoProduct) {
@@ -326,6 +361,11 @@ const DetailProductScreen = () => {
     return baseAvt;
   };
 
+  const handleOpenLightBox = (index: number) => {
+    setOpenLightBox(true);
+    setIndexLightBox(index);
+  };
+
   if (!infoProduct) {
     return (
       <>
@@ -343,7 +383,7 @@ const DetailProductScreen = () => {
           <View style={styles.suggestions_listProduct}>
             {listSuggesProduct?.map((item, index) => (
               <View key={item.id + index.toString()} style={styles.suggestions_listProduct_item}>
-                <Card_product data={item} />
+                <Card_product data={item} navigation={navigation} />
               </View>
             ))}
           </View>
@@ -358,13 +398,15 @@ const DetailProductScreen = () => {
       enabled={true}
       keyboardVerticalOffset={10}
     >
-      <ScrollView ref={scrollView}>
+      <ScrollView ref={scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View style={styles.DetailProduct_container}>
           <FocusAwareStatusBar translucent backgroundColor="transparent" />
           <View style={[styles.header, { paddingTop: insets.top }]}>
-            <View style={styles.header_goBack}>
-              <Icon name="arrow-left" size={20} color="#fff" />
-            </View>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View style={styles.header_goBack}>
+                <Icon name="arrow-left" size={20} color="#fff" />
+              </View>
+            </TouchableOpacity>
             <View style={styles.header_wrapIcon}>
               <View style={styles.header_wrapIcon_icon}>
                 <Icon name="share" size={20} color="#fff" />
@@ -399,11 +441,9 @@ const DetailProductScreen = () => {
               {infoProduct !== null &&
                 infoProduct['imageProduct-product'] &&
                 infoProduct['imageProduct-product']?.map((item, index) => (
-                  <Image
-                    key={item.STTImage + index}
-                    source={{ uri: item.imagebase64 }}
-                    style={styles.wrapImages_image}
-                  />
+                  <TouchableWithoutFeedback key={item.STTImage + index} onPress={() => handleOpenLightBox(index)}>
+                    <Image source={{ uri: item.imagebase64 }} style={styles.wrapImages_image} />
+                  </TouchableWithoutFeedback>
                 ))}
             </Swiper>
             {!infoProduct && <Skeleton animation="pulse" height={windowWidth * 0.9} />}
@@ -666,7 +706,7 @@ const DetailProductScreen = () => {
               {listEvaluate?.length === 0 && <Text>Chưa có đánh giá</Text>}
             </View>
             <View style={styles.evaluate_more}>
-              <Text style={styles.evaluate_more_text}>Xem tất cả (72)</Text>
+              <Text style={styles.evaluate_more_text}>Xem tất cả ({infoEvaluate?.amoutFiller})</Text>
               <Icon name="angle-right" size={24} color="red" />
             </View>
           </View>
@@ -679,21 +719,26 @@ const DetailProductScreen = () => {
             <View style={styles.suggestions_listProduct}>
               {listSuggesProduct?.map((item, index) => (
                 <View key={item.id + index.toString()} style={styles.suggestions_listProduct_item}>
-                  <Card_product data={item} />
+                  <Card_product data={item} navigation={navigation} />
                 </View>
               ))}
             </View>
           </View>
 
           <ImageView
-            images={images}
-            imageIndex={2}
+            images={listImageLighBox}
+            imageIndex={indexLightBox}
             visible={openLightBox}
             onRequestClose={() => setOpenLightBox(false)}
             presentationStyle="overFullScreen"
+            // onImageIndexChange={index => setIndexLightBox(index)}
             // backgroundColor="yellow"
             // eslint-disable-next-line react/no-unstable-nested-components, react-native/no-inline-styles
-            FooterComponent={() => <Text style={{ color: '#fff' }}>1/6</Text>}
+            FooterComponent={({ imageIndex }) => (
+              <Text style={{ color: '#fff' }}>
+                {imageIndex + 1}/{listImageLighBox.length}
+              </Text>
+            )}
           />
         </View>
       </ScrollView>

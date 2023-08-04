@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DetailProduct" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="HomeStack" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen name="DetailProduct" component={DetailProductScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Details" component={DetailsScreen} options={{ headerShown: true }} />
