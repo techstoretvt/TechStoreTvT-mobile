@@ -401,8 +401,8 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
       <ScrollView ref={scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View style={styles.DetailProduct_container}>
           <FocusAwareStatusBar translucent backgroundColor="transparent" />
-          <View style={[styles.header, { paddingTop: insets.top }]}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={[styles.header, { paddingTop: insets.top, opacity: openLightBox ? 0 : 1 }]}>
+            <TouchableOpacity onPress={() => navigation.pop()}>
               <View style={styles.header_goBack}>
                 <Icon name="arrow-left" size={20} color="#fff" />
               </View>

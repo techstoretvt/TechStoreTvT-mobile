@@ -108,6 +108,20 @@ const getEvaluateProductByIdProduct = async data => {
   }
 };
 
+const checkStartServerService = async () => {
+  try {
+    return await axios.get('/api/v1/check-start-server');
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -116,4 +130,5 @@ export {
   getListMayLikeService,
   getProductByIdService,
   getEvaluateProductByIdProduct,
+  checkStartServerService,
 };

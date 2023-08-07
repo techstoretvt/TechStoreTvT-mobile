@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: 10,
     paddingHorizontal: 6,
+    paddingBottom: 10,
   },
   introduces_wrapText: {
     marginTop: 20,
