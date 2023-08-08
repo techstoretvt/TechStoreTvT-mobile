@@ -2,6 +2,7 @@
 import { View, Text, ImageBackground, Image } from 'react-native';
 import React from 'react';
 import { LinearProgress } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './start-screen_styles';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
@@ -27,12 +28,16 @@ const StartScreen = ({ navigation }: StartScreen) => {
   React.useEffect(() => {
     checkStartServerService()
       .then(res => {
-        console.log(res);
         if (res?.errCode === 0) {
           setTimeout(() => {
             setProgess(1);
-            setTimeout(() => {
-              navigation.navigate('HomeStack', { screen: 'Home' });
+            setTimeout(async () => {
+              let accessToken = await AsyncStorage.getItem('accessToken');
+              if (accessToken) {
+                navigation.navigate('HomeStack', { screen: 'Home' });
+              } else {
+                navigation.navigate('Login');
+              }
             }, 0);
           }, 1000);
         }

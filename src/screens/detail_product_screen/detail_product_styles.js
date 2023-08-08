@@ -357,6 +357,35 @@ const styles = StyleSheet.create({
     minHeight: 100,
     padding: 6,
   },
+  btnBottoms: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  btnBottoms_left: {
+    backgroundColor: 'red',
+    flex: 1,
+    paddingVertical: 10,
+  },
+  btnBottoms_left_text: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  btnBottoms_right: {
+    paddingHorizontal: 30,
+    backgroundColor: 'green',
+    paddingVertical: 10,
+  },
+  btnBottoms_right_text: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
 });
 
 export default styles;

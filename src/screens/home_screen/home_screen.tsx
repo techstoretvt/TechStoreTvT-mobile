@@ -15,6 +15,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Slider } from '@rneui/themed';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './home_screen_styles';
 import CountDown from 'react-native-countdown-component';
@@ -113,6 +114,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [isLoadMore, setIsLoadMore] = React.useState(false);
 
   React.useEffect(() => {
+    // AsyncStorage.removeItem('accessToken');
+    // AsyncStorage.removeItem('refreshToken');
     init();
     return () => {
       console.log('goi lai');

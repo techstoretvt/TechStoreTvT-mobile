@@ -122,6 +122,20 @@ const checkStartServerService = async () => {
   }
 };
 
+const userLoginService = async data => {
+  try {
+    return await axios.post('/api/user-login', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -131,4 +145,5 @@ export {
   getProductByIdService,
   getEvaluateProductByIdProduct,
   checkStartServerService,
+  userLoginService,
 };

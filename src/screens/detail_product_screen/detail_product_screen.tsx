@@ -742,6 +742,14 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
           />
         </View>
       </ScrollView>
+      <View style={styles.btnBottoms}>
+        <TouchableOpacity style={styles.btnBottoms_left}>
+          <Text style={styles.btnBottoms_left_text}>Thêm vào giỏ</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnBottoms_right}>
+          <Text style={styles.btnBottoms_right_text}>Mua ngay</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 };

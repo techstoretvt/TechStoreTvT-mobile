@@ -22,8 +22,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '700',
   },
-  LoginScreen_content_form: {
+  LoginScreen_content_message: {
+    color: 'red',
     marginTop: 50,
+    textAlign: 'center',
+  },
+  LoginScreen_content_form: {
+    marginTop: 20,
   },
   LoginScreen_content_form_wrapPassword: {
     marginTop: 20,
