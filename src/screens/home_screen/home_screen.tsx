@@ -206,7 +206,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
               <FocusAwareStatusBar translucent backgroundColor="transparent" />
               <View style={styles.carousel_header_content}>
                 <View style={[styles.carousel_header_wrap_header, { top: insets.top }]}>
-                  <HeaderHome />
+                  <HeaderHome navigation={navigation} />
                 </View>
                 <View style={[styles.carousel_header_content_slider, { paddingTop: insets.top + 50 }]}>
                   <SliderImage listImages={listEvent} height={130} />

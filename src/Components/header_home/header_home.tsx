@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Badge } from '@rneui/themed';
@@ -9,8 +9,11 @@ import styles from './header_home_styles';
 // type inputSearchType = {
 //     text: string;
 // };
+interface HeaderHome {
+  navigation: any;
+}
 
-const HeaderHome = () => {
+const HeaderHome = ({ navigation }: HeaderHome) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -23,7 +26,9 @@ const HeaderHome = () => {
           </View>
         </View>
         <View style={styles.wrap_cart}>
-          <Icon name="cart-plus" size={30} color="#fff" />
+          <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+            <Icon name="cart-plus" size={30} color="#fff" />
+          </TouchableOpacity>
           <Badge
             value={10}
             status="error"

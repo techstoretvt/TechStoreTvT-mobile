@@ -13,12 +13,16 @@ let isRefreshing = false;
 const requestQueue = [];
 
 instance.interceptors.request.use(
-  config => {
-    // if (IgnoreUrl(config.url)) return config;
+  async config => {
+    // console.log(config.url);
+    if (config.url === '/api/v1/check-start-server' || config.url === '/api/user-login') {
+      return config;
+    }
 
     // Kiểm tra token hết hạn
-    const accessToken = AsyncStorage.getItem('accessToken');
+    const accessToken = await AsyncStorage.getItem('accessToken');
     if (!accessToken) {
+      console.log('access token khong ton tai');
       // Nếu không tồn tại accessToken, trả về một Promise.reject với giá trị { code: -1 }
       return Promise.reject({
         response: {
@@ -26,6 +30,7 @@ instance.interceptors.request.use(
         },
       });
     }
+    console.log('co accesstoken', accessToken);
 
     let time_decode = decode_token_exp(accessToken);
     let now = Math.floor(new Date().getTime() / 1000);
@@ -37,7 +42,7 @@ instance.interceptors.request.use(
         console.log('Start refreshToken.');
         isRefreshing = true;
 
-        const refreshToken = AsyncStorage.getItem('refreshToken');
+        const refreshToken = await AsyncStorage.getItem('refreshToken');
         axios
           .post(`${REACT_APP_URL_BACKEND}/api/refresh-token`, { refreshToken })
           .then(response => {
@@ -83,8 +88,7 @@ instance.interceptors.request.use(
       });
     }
     // Trả về config của yêu cầu nếu token chưa hết hạn
-
-    config.headers['Authorization'] = `Bearer ${AsyncStorage.getItem('accessToken')}`;
+    config.headers['Authorization'] = `Bearer ${await AsyncStorage.getItem('accessToken')}`;
     return config;
   },
   error => {

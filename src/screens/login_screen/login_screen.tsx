@@ -54,11 +54,11 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
     }
     setLoading(true);
     let res = await userLoginService({ email, pass: password });
-    console.log(res);
+    // console.log(res);
     if (res?.errCode === 0) {
       setLoading(false);
-      AsyncStorage.setItem('accessToken', res.data.accessToken);
-      AsyncStorage.setItem('refreshToken', res.data.refreshToken);
+      await AsyncStorage.setItem('accessToken', res.data.accessToken);
+      await AsyncStorage.setItem('refreshToken', res.data.refreshToken);
       navigation.navigate('HomeStack', { screen: 'Home' });
     } else {
       setMessage(res?.errMessage);

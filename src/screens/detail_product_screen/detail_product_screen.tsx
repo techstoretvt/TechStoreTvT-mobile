@@ -10,13 +10,16 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   RefreshControl,
+  TextInput,
+  Modal,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import ImageView from 'react-native-image-viewing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Swiper from 'react-native-swiper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Badge, AirbnbRating, Avatar, Skeleton } from '@rneui/themed';
+import { Badge, AirbnbRating, Avatar, Skeleton, Button } from '@rneui/themed';
 import RenderHtml from 'react-native-render-html';
 import Video from 'react-native-video';
 
@@ -24,7 +27,12 @@ import styles from './detail_product_styles';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
 import { typeProdutView } from '../../utils/interface';
 import Card_product from '../../components/card_product/card_product';
-import { getListMayLikeService, getProductByIdService, getEvaluateProductByIdProduct } from '../../services/api';
+import {
+  getListMayLikeService,
+  getProductByIdService,
+  getEvaluateProductByIdProduct,
+  userAddCartProductService,
+} from '../../services/api';
 import { formatNumberToThousands } from '../../utils/common';
 import { REACT_APP_URL_FRONTEND } from '../../utils/constant';
 
@@ -182,6 +190,8 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
   const [infoEvaluate, setInfoEvaluate] = React.useState<inforEvaluateType | null>(null);
   const [listImageLighBox, setListImageLightBox] = React.useState([]);
   const [indexLightBox, setIndexLightBox] = React.useState(0);
+  const [countSelect, setCountSelect] = React.useState('1');
+  const [openModalAddCart, setOpenModalAddCart] = React.useState(false);
 
   React.useEffect(() => {
     if (params.idProduct) {
@@ -197,6 +207,19 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoProduct]);
+
+  React.useEffect(() => {
+    if (!infoProduct) {
+      return;
+    }
+    if (+countSelect < 1) {
+      setCountSelect('1');
+    }
+    if (+countSelect > getInventory()) {
+      setCountSelect(getInventory() + '');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countSelect]);
 
   let getSuggestProduct = async () => {
     let idProductCurrent = params.idProduct;
@@ -319,7 +342,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
 
   const getInventory = () => {
     if (!infoProduct) {
-      return;
+      return 0;
     }
     let classifies = infoProduct['classifyProduct-product'];
     if (!checkIsClassify()) {
@@ -364,6 +387,41 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
   const handleOpenLightBox = (index: number) => {
     setOpenLightBox(true);
     setIndexLightBox(index);
+  };
+
+  const getImageClassidy = () => {
+    if (!infoProduct) {
+      return 'https://source.unsplash.com/random?sig=1';
+    }
+    let sttImage = infoProduct['classifyProduct-product'][indexClassify].STTImg;
+    infoProduct['imageProduct-product']?.map(item => {
+      if (item.STTImage === sttImage) {
+        return item.imagebase64;
+      }
+    });
+    return infoProduct['imageProduct-product'][0].imagebase64;
+  };
+
+  const addCartProduct = async () => {
+    if (!infoProduct) {
+      return;
+    }
+    let data = {
+      idProduct: params.idProduct,
+      amount: countSelect,
+      idClassifyProduct: infoProduct['classifyProduct-product'][indexClassify].id,
+      accessToken: 'empty',
+    };
+    console.log('data: ', data);
+
+    let res = await userAddCartProductService(data);
+    console.log(res);
+
+    if (res?.errCode === 0) {
+      Alert.alert('Đã thêm vào giỏ hàng');
+    } else {
+      Alert.alert(res?.errMessage || 'error');
+    }
   };
 
   if (!infoProduct) {
@@ -724,7 +782,6 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
               ))}
             </View>
           </View>
-
           <ImageView
             images={listImageLighBox}
             imageIndex={indexLightBox}
@@ -742,8 +799,85 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
           />
         </View>
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={openModalAddCart}
+        onRequestClose={() => {
+          setOpenModalAddCart(!openModalAddCart);
+        }}
+      >
+        <View style={styles.wrapModalAddCard}>
+          <View style={styles.modalAddCard}>
+            <TouchableOpacity style={styles.modalAddCard_iconClose} onPress={() => setOpenModalAddCart(false)}>
+              <Icon name="times" size={30} color="#000" />
+            </TouchableOpacity>
+            <View style={styles.modalAddCard_top}>
+              <Image source={{ uri: getImageClassidy() }} style={styles.modalAddCard_top_image} />
+              <View style={styles.modalAddCard_top_wrapPrice}>
+                <Text style={styles.modalAddCard_top_wrapPrice_textPrice}>
+                  {infoProduct && formatNumberToThousands(getCurrentPrice()) + '₫'}
+                </Text>
+                <Text style={styles.modalAddCard_top_wrapPrice_textAmount}>Kho: {getInventory()}</Text>
+              </View>
+            </View>
+            <View style={styles.modalAddCard_category}>
+              <Text style={styles.modalAddCard_category_title}>Phân loại</Text>
+              <View style={styles.modalAddCard_category_list}>
+                {checkIsClassify() &&
+                  infoProduct['classifyProduct-product']?.map((item, index) => (
+                    <TouchableOpacity key={item.id + index} onPress={() => setIndexClassify(index)}>
+                      <Text
+                        style={[
+                          styles.modalAddCard_category_list_item,
+                          { backgroundColor: index === indexClassify ? 'orange' : '#ccc' },
+                        ]}
+                      >
+                        {' '}
+                        {item.nameClassifyProduct}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+
+                {!checkIsClassify() && <Text>Khong co phan loai</Text>}
+              </View>
+            </View>
+            <View style={styles.amount}>
+              <Text style={styles.amount_text}>Số lượng:</Text>
+              <View style={styles.amount_wrap}>
+                <Button
+                  title="-"
+                  buttonStyle={styles.amount_wrap_btn}
+                  onPress={() =>
+                    setCountSelect(prev => {
+                      return +prev - 1 + '';
+                    })
+                  }
+                />
+                <TextInput
+                  style={styles.amount_wrap_input}
+                  value={countSelect}
+                  keyboardType="numeric"
+                  onChangeText={text => setCountSelect(text)}
+                />
+                <Button
+                  title="+"
+                  buttonStyle={styles.amount_wrap_btn}
+                  onPress={() =>
+                    setCountSelect(prev => {
+                      return +prev + 1 + '';
+                    })
+                  }
+                />
+              </View>
+            </View>
+            <Button title="Thêm vào giỏ" onPress={addCartProduct} />
+          </View>
+          <TouchableOpacity onPress={() => setOpenModalAddCart(false)} style={styles.modalAddCard_overlay} />
+        </View>
+      </Modal>
       <View style={styles.btnBottoms}>
-        <TouchableOpacity style={styles.btnBottoms_left}>
+        <TouchableOpacity style={styles.btnBottoms_left} onPress={() => setOpenModalAddCart(true)}>
           <Text style={styles.btnBottoms_left_text}>Thêm vào giỏ</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnBottoms_right}>

@@ -136,6 +136,20 @@ const userLoginService = async data => {
   }
 };
 
+const userAddCartProductService = async data => {
+  try {
+    return await axios.post('/api/v1/add-product-to-cart', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -146,4 +160,5 @@ export {
   getEvaluateProductByIdProduct,
   checkStartServerService,
   userLoginService,
+  userAddCartProductService,
 };

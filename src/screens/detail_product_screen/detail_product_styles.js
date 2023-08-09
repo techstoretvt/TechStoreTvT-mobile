@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+// const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   DetailProduct_container: {
@@ -385,6 +387,106 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: '700',
+  },
+  wrapModalAddCard: {
+    flex: 1,
+    zIndex: 1,
+  },
+  modalAddCard: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    // minHeight: windowHeight - 200,
+    backgroundColor: '#fff',
+    zIndex: 2,
+  },
+  modalAddCard_iconClose: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+  modalAddCard_top: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  modalAddCard_top_image: {
+    width: '35%',
+    aspectRatio: 1 / 1,
+    margin: 10,
+  },
+  modalAddCard_top_wrapPrice: {
+    padding: 10,
+    justifyContent: 'flex-end',
+  },
+  modalAddCard_top_wrapPrice_textPrice: {
+    color: 'red',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  modalAddCard_top_wrapPrice_textAmount: {},
+  modalAddCard_overlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#00000080',
+    height: windowHeight,
+    zIndex: 1,
+  },
+  modalAddCard_category: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  modalAddCard_category_title: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  modalAddCard_category_list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  modalAddCard_category_list_item: {
+    backgroundColor: '#ccc',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 6,
+    marginHorizontal: 4,
+  },
+  amount: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    paddingVertical: 10,
+  },
+  amount_text: {
+    color: '#000',
+    fontWeight: '600',
+    fontSize: 16,
+  },
+  amount_wrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  amount_wrap_btn: {
+    // backgroundColor: '#fff',
+  },
+  amount_wrap_input: {
+    borderWidth: 1,
+    borderColor: '#000',
+    paddingHorizontal: 10,
+    textAlign: 'center',
+    paddingVertical: 4,
   },
 });
 
