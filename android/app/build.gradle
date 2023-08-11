@@ -131,9 +131,9 @@ tasks.whenTaskAdded { task ->
 }
 
 
-project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf','FontAwesome.ttf' ] 
-]
+// project.ext.vectoricons = [
+//     iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf','FontAwesome.ttf' ] 
+// ]
 
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")

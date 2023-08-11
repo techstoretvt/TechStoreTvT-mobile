@@ -9,12 +9,13 @@ import DetailProductScreen from '../../screens/detail_product_screen/detail_prod
 import StartScreen from '../../screens/start_screen/start_screen';
 import LoginScreen from '../../screens/login_screen/login_screen';
 import CartScreen from '../../screens/cart_screen/cart_screen';
+import PaymentScreen from '../../screens/payment_screen/payment_screen';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Payment" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen
           name="DetailProduct"
@@ -24,7 +25,8 @@ const MainApp = () => {
         />
         <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: true, title: 'Giỏ hàng' }} />
+        <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: true, title: 'Giỏ hàng (22)' }} />
+        <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true, title: 'Thanh toán' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -150,6 +150,76 @@ const userAddCartProductService = async data => {
   }
 };
 
+const getListCartUserService = async data => {
+  try {
+    return await axios.get('/api/v1/get-list-cart-user', { params: { accessToken: 'empty' } });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const chooseProductInCart = async data => {
+  try {
+    return await axios.put('/api/v1/choose-product-in-cart', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const editAmountCart = async data => {
+  try {
+    return await axios.put('/api/v1/edit-amount-cart-user', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const changeClassifyOfCart = async data => {
+  try {
+    return await axios.put('/api/v1/update-classify-product-in-cart', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const toggleChooseAllCart = async data => {
+  try {
+    return await axios.put('/api/v1/choose-all-product-in-cart', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -161,4 +231,9 @@ export {
   checkStartServerService,
   userLoginService,
   userAddCartProductService,
+  getListCartUserService,
+  chooseProductInCart,
+  editAmountCart,
+  changeClassifyOfCart,
+  toggleChooseAllCart,
 };

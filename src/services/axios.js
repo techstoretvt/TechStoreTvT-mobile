@@ -30,7 +30,7 @@ instance.interceptors.request.use(
         },
       });
     }
-    console.log('co accesstoken', accessToken);
+    console.log('accessToken: ', accessToken);
 
     let time_decode = decode_token_exp(accessToken);
     let now = Math.floor(new Date().getTime() / 1000);
