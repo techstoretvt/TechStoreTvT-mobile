@@ -21,9 +21,10 @@ import { createSlice } from '@reduxjs/toolkit';
 // };
 
 const initialState = {
-    // Initial state của reducer
-    theme: 'light', // Chủ đề mặc định là light (chủ đề sáng)
-    language: 'en', // Ngôn ngữ mặc định là tiếng Anh
+  // Initial state của reducer
+  theme: 'light', // Chủ đề mặc định là light (chủ đề sáng)
+  language: 'en', // Ngôn ngữ mặc định là tiếng Anh
+  listAddressUser: null,
 };
 
 // getPersistedData('theme').then((theme) => {
@@ -40,20 +41,23 @@ const initialState = {
 // });
 
 const appReducer = createSlice({
-    name: 'app',
-    initialState,
-    reducers: {
-        // Action để thay đổi chủ đề (theme)
-        setTheme: (state, action) => {
-            console.log('vao action (action.payload): ', action.payload);
-            state.theme = action.payload;
-        },
-        // Action để thay đổi ngôn ngữ (language)
-        setLanguage: (state, action) => {
-            state.language = action.payload;
-        },
+  name: 'app',
+  initialState,
+  reducers: {
+    // Action để thay đổi chủ đề (theme)
+    setTheme: (state, action) => {
+      console.log('vao action (action.payload): ', action.payload);
+      state.theme = action.payload;
     },
+    // Action để thay đổi ngôn ngữ (language)
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    },
+    setListAddressUser: (state, action) => {
+      state.listAddressUser = action.payload;
+    },
+  },
 });
 
-export const { setTheme, setLanguage } = appReducer.actions;
+export const { setTheme, setLanguage, setListAddressUser } = appReducer.actions;
 export default appReducer.reducer;

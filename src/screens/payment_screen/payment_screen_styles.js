@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   payment_listProduct_item_Image: {
     width: 90,
     height: 90,
+    backgroundColor: '#ccc',
   },
   payment_listProduct_item_content: {
     padding: 6,
@@ -188,6 +189,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: 10,
     paddingVertical: 10,
+    paddingHorizontal: 10,
   },
   payment_footer_left: {
     alignItems: 'flex-end',

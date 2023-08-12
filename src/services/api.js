@@ -220,6 +220,34 @@ const toggleChooseAllCart = async data => {
   }
 };
 
+const getListAddressUserServices = async data => {
+  try {
+    return await axios.get('/api/v1/get-address-user', { params: { accessToken: 'empty' } });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const setDefaultAddressService = async data => {
+  try {
+    return await axios.put('/api/v1/set-default-address', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -236,4 +264,6 @@ export {
   editAmountCart,
   changeClassifyOfCart,
   toggleChooseAllCart,
+  getListAddressUserServices,
+  setDefaultAddressService,
 };

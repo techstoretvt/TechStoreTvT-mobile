@@ -7,13 +7,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer } from 'redux-persist';
 
 const appPersistConfig = {
-    key: 'app',
-    storage: AsyncStorage,
-    blacklist: ['language'],
+  key: 'app',
+  storage: AsyncStorage,
+  blacklist: ['language', 'listAddressUser'],
 };
 
 const rootReducer = combineReducers({
-    app: persistReducer(appPersistConfig, appReducer),
+  app: persistReducer(appPersistConfig, appReducer),
 });
 
 export default rootReducer;

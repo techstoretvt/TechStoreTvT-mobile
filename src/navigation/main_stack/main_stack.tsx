@@ -10,6 +10,8 @@ import StartScreen from '../../screens/start_screen/start_screen';
 import LoginScreen from '../../screens/login_screen/login_screen';
 import CartScreen from '../../screens/cart_screen/cart_screen';
 import PaymentScreen from '../../screens/payment_screen/payment_screen';
+import ChooseAdress from '../../screens/choose_address/choosse_address';
+import NewAddress from '../../screens/new_address/new_address';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
@@ -27,6 +29,16 @@ const MainApp = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: true, title: 'Giỏ hàng (22)' }} />
         <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true, title: 'Thanh toán' }} />
+        <Stack.Screen
+          name="ChooseAddress"
+          component={ChooseAdress}
+          options={{ headerShown: true, title: 'Chọn địa chỉ nhân hàng' }}
+        />
+        <Stack.Screen
+          name="NewAddress"
+          component={NewAddress}
+          options={{ headerShown: true, title: 'Chọn địa chỉ nhân hàng' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
