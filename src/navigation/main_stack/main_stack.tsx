@@ -12,12 +12,16 @@ import CartScreen from '../../screens/cart_screen/cart_screen';
 import PaymentScreen from '../../screens/payment_screen/payment_screen';
 import ChooseAdress from '../../screens/choose_address/choosse_address';
 import NewAddress from '../../screens/new_address/new_address';
+import ChooseCountry, { ChooseCountry_Header } from '../../components/choose_country/choose_country';
+import ChooseDistrict, { ChooseDistrict_Header } from '../../components/choose_district/choose_district';
+import ChoosePaymentMethob from '../../components/choose_payment_methob/choose_payment_methob';
+import PurchaseFrom from '../../screens/purchase_from/purchase_from';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Payment" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="PurchaseFrom" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen
           name="DetailProduct"
@@ -32,13 +36,38 @@ const MainApp = () => {
         <Stack.Screen
           name="ChooseAddress"
           component={ChooseAdress}
-          options={{ headerShown: true, title: 'Chọn địa chỉ nhân hàng' }}
+          options={{ headerShown: true, title: 'Chọn địa chỉ nhận hàng' }}
         />
         <Stack.Screen
           name="NewAddress"
           component={NewAddress}
-          options={{ headerShown: true, title: 'Chọn địa chỉ nhân hàng' }}
+          options={{ headerShown: true, title: 'Thêm địa chỉ mới' }}
         />
+        <Stack.Screen
+          name="ChooseCountry"
+          component={ChooseCountry}
+          options={{
+            headerShown: true,
+            headerTitle: () => <ChooseCountry_Header />,
+          }}
+        />
+        <Stack.Screen
+          name="ChooseDistrict"
+          component={ChooseDistrict}
+          options={{
+            headerShown: true,
+            headerTitle: () => <ChooseDistrict_Header />,
+          }}
+        />
+        <Stack.Screen
+          name="ChoosePaymentMethob"
+          component={ChoosePaymentMethob}
+          options={{
+            headerShown: true,
+            title: 'Phương thức thanh toán',
+          }}
+        />
+        <Stack.Screen name="PurchaseFrom" component={PurchaseFrom} />
       </Stack.Navigator>
     </NavigationContainer>
   );

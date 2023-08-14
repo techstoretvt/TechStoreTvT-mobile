@@ -558,7 +558,12 @@ const CartScreen = ({ navigation }: { navigation: any }) => {
             </Text>
           </View>
           <View style={styles.CartScreen_footer_btnBuy}>
-            <ButtonPaper mode="contained" onPress={handleBuy} disabled={!checkIsChooseCart()}>
+            <ButtonPaper
+              mode="contained"
+              onPress={handleBuy}
+              disabled={!checkIsChooseCart()}
+              buttonColor="red"
+              labelStyle={{ fontSize: 12, paddingHorizontal: 0 }}>
               Mua hàng
             </ButtonPaper>
           </View>

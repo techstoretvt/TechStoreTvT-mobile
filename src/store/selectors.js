@@ -10,6 +10,16 @@ const selectLanguage = state => state.app.language;
 
 const selectListAddressUser = state => state.app.listAddressUser;
 
+const selectSearchCountry = state => state.app.searchCountry;
+
+const selectSearchDistrict = state => state.app.searchDistrict;
+
+const selectIndexCountry = state => state.app.indexCountry;
+
+const selectIndexDistrict = state => state.app.indexDistrict;
+
+const selectPaymentMethob = state => state.app.paymentMethob;
+
 // Selector kết hợp thông tin về chủ đề và ngôn ngữ thành một đối tượng
 const selectAppSettings = createSelector(
   selectTheme,
@@ -23,4 +33,14 @@ const selectAppSettings = createSelector(
 );
 
 // Export các selectors để sử dụng trong các component khác
-export { selectTheme, selectLanguage, selectListAddressUser, selectAppSettings };
+export {
+  selectAppSettings,
+  selectTheme,
+  selectLanguage,
+  selectListAddressUser,
+  selectSearchCountry,
+  selectIndexCountry,
+  selectSearchDistrict,
+  selectIndexDistrict,
+  selectPaymentMethob,
+};

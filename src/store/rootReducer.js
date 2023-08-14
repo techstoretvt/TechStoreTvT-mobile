@@ -9,7 +9,16 @@ import { persistReducer } from 'redux-persist';
 const appPersistConfig = {
   key: 'app',
   storage: AsyncStorage,
-  blacklist: ['language', 'listAddressUser'],
+  blacklist: [
+    'language',
+    'listAddressUser',
+    'searchCountry',
+    'indexCountry',
+    'searchDistrict',
+    'indexDistrict',
+    'paymentMethob',
+  ],
+  // whiteList: ['theme'],
 };
 
 const rootReducer = combineReducers({

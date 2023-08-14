@@ -25,20 +25,15 @@ const initialState = {
   theme: 'light', // Chủ đề mặc định là light (chủ đề sáng)
   language: 'en', // Ngôn ngữ mặc định là tiếng Anh
   listAddressUser: null,
+  searchCountry: '',
+  searchDistrict: '',
+  indexCountry: -1,
+  indexDistrict: -1,
+  paymentMethob: {
+    name: 'hand',
+    title: 'Thanh toán khi nhận hàng',
+  },
 };
-
-// getPersistedData('theme').then((theme) => {
-//     if (theme) {
-//         initialState.theme = theme; // Cập nhật trạng thái ban đầu với dữ liệu từ AsyncStorage
-//     }
-// });
-
-// // Sử dụng hàm để lấy dữ liệu language từ AsyncStorage
-// getPersistedData('language').then((language) => {
-//     if (language) {
-//         initialState.language = language; // Cập nhật trạng thái ban đầu với dữ liệu từ AsyncStorage
-//     }
-// });
 
 const appReducer = createSlice({
   name: 'app',
@@ -56,8 +51,32 @@ const appReducer = createSlice({
     setListAddressUser: (state, action) => {
       state.listAddressUser = action.payload;
     },
+    setSearchCountry: (state, action) => {
+      state.searchCountry = action.payload;
+    },
+    setIndexCountry: (state, action) => {
+      state.indexCountry = action.payload;
+    },
+    setSearchDistrict: (state, action) => {
+      state.searchDistrict = action.payload;
+    },
+    setIndexDistrict: (state, action) => {
+      state.indexDistrict = action.payload;
+    },
+    setPaymentMethob: (state, action) => {
+      state.paymentMethob = action.payload;
+    },
   },
 });
 
-export const { setTheme, setLanguage, setListAddressUser } = appReducer.actions;
+export const {
+  setTheme,
+  setLanguage,
+  setListAddressUser,
+  setSearchCountry,
+  setIndexCountry,
+  setSearchDistrict,
+  setIndexDistrict,
+  setPaymentMethob,
+} = appReducer.actions;
 export default appReducer.reducer;

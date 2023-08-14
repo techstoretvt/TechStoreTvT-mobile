@@ -28,30 +28,32 @@ const HeaderHome = ({ navigation }: HeaderHome) => {
         <View style={styles.wrap_cart}>
           <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
             <Icon name="cart-plus" size={30} color="#fff" />
+            <Badge
+              value={10}
+              status="error"
+              // eslint-disable-next-line react-native/no-inline-styles
+              containerStyle={{
+                position: 'absolute',
+                top: -6,
+                left: 18,
+              }}
+            />
           </TouchableOpacity>
-          <Badge
-            value={10}
-            status="error"
-            // eslint-disable-next-line react-native/no-inline-styles
-            containerStyle={{
-              position: 'absolute',
-              top: -6,
-              left: 18,
-            }}
-          />
         </View>
         <View style={styles.wrap_notify}>
-          <Icon name="bell" size={26} color="#fff" />
-          <Badge
-            value={10}
-            status="error"
-            // eslint-disable-next-line react-native/no-inline-styles
-            containerStyle={{
-              position: 'absolute',
-              top: -6,
-              left: 12,
-            }}
-          />
+          <TouchableOpacity onPress={() => navigation.navigate('PurchaseFrom')}>
+            <Icon name="bell" size={26} color="#fff" />
+            <Badge
+              value={10}
+              status="error"
+              // eslint-disable-next-line react-native/no-inline-styles
+              containerStyle={{
+                position: 'absolute',
+                top: -6,
+                left: 12,
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

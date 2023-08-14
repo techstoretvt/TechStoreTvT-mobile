@@ -184,13 +184,16 @@ const styles = StyleSheet.create({
     height: 50,
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    paddingHorizontal: 10,
   },
   CartScreen_footer_all: {
     flexDirection: 'row',
     alignItems: 'center',
     width: 100,
   },
-  CartScreen_footer_all_text: {},
+  CartScreen_footer_all_text: {
+    fontSize: 12,
+  },
   CartScreen_footer_totals: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -206,7 +209,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   CartScreen_footer_btnBuy: {
-    width: 140,
+    // width: 140,
   },
 });
 

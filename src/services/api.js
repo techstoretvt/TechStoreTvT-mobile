@@ -248,6 +248,34 @@ const setDefaultAddressService = async data => {
   }
 };
 
+const addNewAddressUser = async data => {
+  try {
+    return await axios.post('/api/v1/add-new-address-user', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const createNewBillByHand = async data => {
+  try {
+    return await axios.post('/api/v1/create-new-bill', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -266,4 +294,6 @@ export {
   toggleChooseAllCart,
   getListAddressUserServices,
   setDefaultAddressService,
+  addNewAddressUser,
+  createNewBillByHand,
 };

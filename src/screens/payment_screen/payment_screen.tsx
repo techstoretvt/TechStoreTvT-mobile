@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, TouchableOpacity, ScrollView, Image, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, TextInput, Alert } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
@@ -7,14 +7,15 @@ import { Button } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './payment_screen_styles';
-import { getListCartUserService, getListAddressUserServices } from '../../services/api';
+import { getListCartUserService, getListAddressUserServices, createNewBillByHand } from '../../services/api';
 import { formatNumberToThousands } from '../../utils/common';
 import { setListAddressUser } from '../../store/appReducer';
-import { selectListAddressUser } from '../../store/selectors';
+import { selectListAddressUser, selectPaymentMethob } from '../../store/selectors';
 
 const PaymentScreen = ({ navigation }: { navigation: any }) => {
   let dispatch = useDispatch();
   const listAddressUser = useSelector(selectListAddressUser);
+  const paymentMethob = useSelector(selectPaymentMethob);
 
   const [listProduct, setListProduct] = React.useState<any | null>(null);
   const [addressDefault, setAddressDefault] = React.useState<any>(null);
@@ -31,6 +32,16 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
       setAddressDefault(arr);
     }
   }, [listAddressUser]);
+
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('beforeRemove', (e: any) => {
+  //     console.log('vao', e.data.action);
+  //     e.preventDefault();
+
+  //   });
+
+  //   return unsubscribe;
+  // }, [navigation]);
 
   const getListProduct = async () => {
     let res = await getListCartUserService();
@@ -82,6 +93,22 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
     }
     let kq = listProduct.reduce((count: number, item: any) => count + getCurrentPriceProduct(item) * item.amount, 0);
     return kq;
+  };
+
+  const handeBuy = async () => {
+    if (paymentMethob.name === 'hand') {
+      let res = await createNewBillByHand({
+        accessToken: 'empty',
+        Totals: getTotal(),
+      });
+      console.log(res);
+      if (res?.errCode === 0) {
+        console.log('Success!');
+        navigation.navigate('PurchaseFrom');
+      } else {
+        Alert.alert('Thất bại', res?.errMessage || 'Error');
+      }
+    }
   };
 
   return (
@@ -156,8 +183,10 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
             <Icon2 name="payment" size={20} color={'red'} />
             <Text style={styles.payment_methobs_title_text}>Phương thức thanh toán</Text>
           </View>
-          <TouchableOpacity style={styles.payment_methobs_right}>
-            <Text style={styles.payment_methobs_right_text}>Thanh toán khi nhận hàng</Text>
+          <TouchableOpacity
+            style={styles.payment_methobs_right}
+            onPress={() => navigation.navigate('ChoosePaymentMethob')}>
+            <Text style={styles.payment_methobs_right_text}>{paymentMethob.title}</Text>
             <Icon name="chevron-thin-right" size={14} color={'#000'} />
           </TouchableOpacity>
         </View>
@@ -196,7 +225,7 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
           <Text style={styles.payment_footer_left_title}>Tổng thanh toán</Text>
           <Text style={styles.payment_footer_left_price}>{formatNumberToThousands(getTotal()) + 'd'}</Text>
         </View>
-        <Button mode="contained" onPress={() => console.log('Pressed')}>
+        <Button mode="contained" onPress={() => handeBuy()}>
           Đặt hàng
         </Button>
       </View>

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     borderWidth: 1,
     borderColor: '#333',
+    marginBottom: 6,
   },
   NewAddress_country_text: {
     flex: 1,
