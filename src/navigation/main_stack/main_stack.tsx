@@ -67,7 +67,13 @@ const MainApp = () => {
             title: 'Phương thức thanh toán',
           }}
         />
-        <Stack.Screen name="PurchaseFrom" component={PurchaseFrom} />
+        <Stack.Screen
+          name="PurchaseFrom"
+          component={PurchaseFrom}
+          initialParams={{
+            idTypeBill: 1,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

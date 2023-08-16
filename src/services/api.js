@@ -276,6 +276,20 @@ const createNewBillByHand = async data => {
   }
 };
 
+const getListBillByType = async (type, offset) => {
+  try {
+    return await axios.get(`/api/v1/get-list-bill-by-type?accessToken=empty&type=${type}&offset=${offset}`);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -296,4 +310,5 @@ export {
   setDefaultAddressService,
   addNewAddressUser,
   createNewBillByHand,
+  getListBillByType,
 };

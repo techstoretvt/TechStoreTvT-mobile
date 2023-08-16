@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#fff',
+    color: '#000',
   },
   PurchaseFrom_listBill: {
     flex: 1,
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
   },
   PurchaseFrom_listBill_item_product_content_name: {
     color: '#000',
+    textTransform: 'capitalize',
   },
   PurchaseFrom_listBill_item_product_content_classify: {
     flexDirection: 'row',
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     color: 'red',
     marginRight: 'auto',
+    paddingHorizontal: 4,
   },
   PurchaseFrom_listBill_item_product_content_price_root: {
     textDecorationLine: 'line-through',
