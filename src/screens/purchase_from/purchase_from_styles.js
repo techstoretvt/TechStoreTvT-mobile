@@ -112,6 +112,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     gap: 6,
   },
+  PurchaseFrom_listBill_item_modelCancel: {
+    // minHeight: 200,
+    backgroundColor: '#fff',
+    padding: 10,
+  },
+  PurchaseFrom_listBill_item_modelCancel_item: {
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    position: 'relative',
+  },
+  PurchaseFrom_listBill_item_modelCancel_item_text: {
+    position: 'absolute',
+    top: 8,
+    left: 40,
+    pointerEvents: 'none',
+    zIndex: -1,
+  },
 });
 
 export default styles;

@@ -12,6 +12,58 @@ import { formatNumberToThousands } from '../../utils/common';
 import { setListAddressUser } from '../../store/appReducer';
 import { selectListAddressUser, selectPaymentMethob } from '../../store/selectors';
 
+export const Product_payment = ({ item }: { item: any }) => {
+  const getImageProduct = (product: any) => {
+    if (!product) {
+      return '';
+    }
+    if (product.classifyProduct?.nameClassifyProduct === 'default') {
+      return product.product['imageProduct-product'][0].imagebase64;
+    }
+    product.product['imageProduct-product'].forEach((item: any) => {
+      if (item.STTImage === product.classifyProduct.STTImg) {
+        return item.imagebase64;
+      }
+    });
+    return product.product['imageProduct-product'][0].imagebase64;
+  };
+  const getCurrentPriceProduct = (a: any) => {
+    let rootPrice = 0;
+    if (a.classifyProduct.nameClassifyProduct === 'default') {
+      rootPrice = +a.product.priceProduct;
+    } else {
+      rootPrice = +a.classifyProduct.priceClassify;
+    }
+
+    let now = new Date().getTime();
+    let promotion = a.product.promotionProducts[0];
+    if (!promotion || promotion.numberPercent === 0 || promotion.timePromotion < now) {
+      return rootPrice;
+    } else {
+      return (rootPrice * (100 - promotion.numberPercent)) / 100;
+    }
+  };
+  return (
+    <View style={styles.payment_listProduct_item}>
+      <Image source={{ uri: getImageProduct(item) }} style={styles.payment_listProduct_item_Image} />
+      <View style={styles.payment_listProduct_item_content}>
+        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.payment_listProduct_item_content_name}>
+          {item.product.nameProduct}
+        </Text>
+        {item?.classifyProduct?.nameClassifyProduct !== 'default' && (
+          <Text style={styles.payment_listProduct_item_content_classift}>
+            Phân loại: {item.classifyProduct.nameClassifyProduct}
+          </Text>
+        )}
+        <Text>x{item.amount}</Text>
+        <Text style={styles.payment_listProduct_item_content_price}>
+          {formatNumberToThousands(getCurrentPriceProduct(item) * item.amount) + 'd'}
+        </Text>
+      </View>
+    </View>
+  );
+};
+
 const PaymentScreen = ({ navigation }: { navigation: any }) => {
   let dispatch = useDispatch();
   const listAddressUser = useSelector(selectListAddressUser);
@@ -58,17 +110,17 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
     }
   };
 
-  const getImageProduct = (product: any) => {
-    if (product.classifyProduct.nameClassifyProduct === 'default') {
-      return product.product['imageProduct-product'][0].imagebase64;
-    }
-    product.product['imageProduct-product'].forEach((item: any) => {
-      if (item.STTImage === product.classifyProduct.STTImg) {
-        return item.imagebase64;
-      }
-    });
-    return product.product['imageProduct-product'][0].imagebase64;
-  };
+  // const getImageProduct = (product: any) => {
+  //   if (product.classifyProduct.nameClassifyProduct === 'default') {
+  //     return product.product['imageProduct-product'][0].imagebase64;
+  //   }
+  //   product.product['imageProduct-product'].forEach((item: any) => {
+  //     if (item.STTImage === product.classifyProduct.STTImg) {
+  //       return item.imagebase64;
+  //     }
+  //   });
+  //   return product.product['imageProduct-product'][0].imagebase64;
+  // };
 
   const getCurrentPriceProduct = (item: any) => {
     let rootPrice = 0;
@@ -149,23 +201,7 @@ const PaymentScreen = ({ navigation }: { navigation: any }) => {
         )}
         <View style={styles.payment_listProduct}>
           {listProduct?.map((item: any) => (
-            <View key={item.id} style={styles.payment_listProduct_item}>
-              <Image source={{ uri: getImageProduct(item) }} style={styles.payment_listProduct_item_Image} />
-              <View style={styles.payment_listProduct_item_content}>
-                <Text numberOfLines={2} ellipsizeMode="tail" style={styles.payment_listProduct_item_content_name}>
-                  {item.product.nameProduct}
-                </Text>
-                {item?.classifyProduct?.nameClassifyProduct !== 'default' && (
-                  <Text style={styles.payment_listProduct_item_content_classift}>
-                    Phân loại: {item.classifyProduct.nameClassifyProduct}
-                  </Text>
-                )}
-                <Text>x{item.amount}</Text>
-                <Text style={styles.payment_listProduct_item_content_price}>
-                  {formatNumberToThousands(getCurrentPriceProduct(item) * item.amount) + 'd'}
-                </Text>
-              </View>
-            </View>
+            <Product_payment key={item.id} item={item} />
           ))}
         </View>
         <View style={styles.payment_message}>

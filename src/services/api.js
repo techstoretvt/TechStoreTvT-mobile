@@ -290,6 +290,62 @@ const getListBillByType = async (type, offset) => {
   }
 };
 
+const cancelBill = async data => {
+  try {
+    return await axios.put(`/api/v1/user-cancel-bill`, data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const recieveBill = async data => {
+  try {
+    return await axios.put('/api/v1/has-received-product', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const rePurchaseBill = async data => {
+  try {
+    return await axios.post('/api/v1/user-repurchase-bill', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getDetailBill = async data => {
+  try {
+    return await axios.get('/api/v2/get-detail-bill-by-id', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -311,4 +367,8 @@ export {
   addNewAddressUser,
   createNewBillByHand,
   getListBillByType,
+  cancelBill,
+  recieveBill,
+  rePurchaseBill,
+  getDetailBill,
 };

@@ -16,6 +16,7 @@ import ChooseCountry, { ChooseCountry_Header } from '../../components/choose_cou
 import ChooseDistrict, { ChooseDistrict_Header } from '../../components/choose_district/choose_district';
 import ChoosePaymentMethob from '../../components/choose_payment_methob/choose_payment_methob';
 import PurchaseFrom from '../../screens/purchase_from/purchase_from';
+import DetailBill from '../../screens/detail_bill/detail_bill';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
@@ -73,6 +74,13 @@ const MainApp = () => {
           initialParams={{
             idTypeBill: 1,
           }}
+        />
+        <Stack.Screen
+          name="DetailBill"
+          component={DetailBill}
+          // initialParams={{
+          //   idTypeBill: 1,
+          // }}
         />
       </Stack.Navigator>
     </NavigationContainer>

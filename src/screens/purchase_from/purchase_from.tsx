@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
-import { View, Text, ScrollView, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, Image, Button, TouchableOpacity, FlatList } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { BottomSheet } from '@rneui/themed';
+import { RadioButton } from 'react-native-paper';
 
 import styles from './purchase_from_styles';
 import HeaderPurchase from '../../components/header_purchase/header_purchase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getListBillByType } from '../../services/api';
+import { getListBillByType, cancelBill, recieveBill, rePurchaseBill } from '../../services/api';
 import { formatNumberToThousands } from '../../utils/common';
 
 const typeBill = [
@@ -32,7 +34,22 @@ const typeBill = [
   },
 ];
 
-const ItemBill = ({ data }: { data: any }) => {
+const listNoteCancel = ['Không muốn mua nửa', 'Thay đổi phân loại', 'Đổi địa chỉ nhận hàng', 'Khác'];
+
+const ItemBill = ({
+  data,
+  getListBill,
+  onChangeIdTypeBill,
+  gotoDetailBill,
+}: {
+  data: any;
+  getListBill: any;
+  onChangeIdTypeBill: any;
+  gotoDetailBill: any;
+}) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [indexNote, setIndexNote] = React.useState(0);
+
   const getStatusBill = (id: number) => {
     if (id > 2 && id < 3) {
       id = 2;
@@ -45,14 +62,14 @@ const ItemBill = ({ data }: { data: any }) => {
       return 'https://source.unsplash.com/random?sig=1';
     }
     let detailBill = data.detailBills[0];
-    let product = detailBill.product;
-    if (detailBill.classifyProduct.nameClassifyProduct === 'default') {
-      return product['imageProduct-product'][0].imagebase64;
+    let product = detailBill?.product;
+    if (detailBill?.classifyProduct?.nameClassifyProduct === 'default') {
+      return product['imageProduct-product'][0]?.imagebase64;
     }
 
     let img = 'https://source.unsplash.com/random?sig=1';
     product['imageProduct-product'].forEach((item: any) => {
-      if (item.STTImage === detailBill.classifyProduct.STTImg) {
+      if (item.STTImage === detailBill?.classifyProduct.STTImg) {
         img = item.imagebase64;
       }
     });
@@ -97,6 +114,38 @@ const ItemBill = ({ data }: { data: any }) => {
     return price;
   };
 
+  const handleCancelBill = async () => {
+    let res = await cancelBill({
+      accessToken: 'empty',
+      id: data.id,
+      note: listNoteCancel[indexNote],
+    });
+    if (res?.errCode === 0) {
+      setIsVisible(false);
+      getListBill();
+    }
+  };
+
+  const handelRecieveBill = async () => {
+    let res = await recieveBill({
+      accessToken: 'empty',
+      id: data.id,
+    });
+    if (res?.errCode === 0) {
+      getListBill();
+    }
+  };
+
+  const handleRePurcharBill = async () => {
+    let res = await rePurchaseBill({
+      accessToken: 'empty',
+      id: data.id,
+    });
+    if (res?.errCode === 0) {
+      onChangeIdTypeBill(1);
+    }
+  };
+
   return (
     <View style={styles.PurchaseFrom_listBill_item}>
       <View style={styles.PurchaseFrom_listBill_item_top}>
@@ -131,7 +180,7 @@ const ItemBill = ({ data }: { data: any }) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => gotoDetailBill(data.id)}>
         <View style={styles.PurchaseFrom_listBill_item_more}>
           <Text style={styles.PurchaseFrom_listBill_item_more_text}>Xem chi tiết</Text>
           <Icon name="right" size={20} color={'#333'} />
@@ -142,14 +191,19 @@ const ItemBill = ({ data }: { data: any }) => {
           <>
             <View style={{ flex: 2 }}>{/* <Button title="Hủy đơn hàng" /> */}</View>
             <View style={{ flex: 1 }}>
-              <Button title="Hủy đơn" color={'red'} />
+              <Button title="Hủy đơn" color={'red'} onPress={() => setIsVisible(true)} />
             </View>
           </>
         )}
         {data.idStatusBill >= 2 && data.idStatusBill < 3 && (
           <>
             <View style={{ flex: 2 }}>
-              <Button title="Đã nhận hàng" color="red" disabled={data.idStatusBill !== 2.99} />
+              <Button
+                title="Đã nhận hàng"
+                color="red"
+                disabled={data.idStatusBill !== 2.99}
+                onPress={handelRecieveBill}
+              />
             </View>
             <View style={{ flex: 1 }}>{/* <Button title="Xem chi tiết" /> */}</View>
           </>
@@ -157,7 +211,7 @@ const ItemBill = ({ data }: { data: any }) => {
         {data.idStatusBill === 3 && (
           <>
             <View style={{ flex: 2 }}>
-              <Button title="Mua lại" />
+              <Button title="Mua lại" onPress={handleRePurcharBill} />
             </View>
             <View style={{ flex: 1 }}>
               <Button title="Đánh giá" color={'red'} />
@@ -167,12 +221,28 @@ const ItemBill = ({ data }: { data: any }) => {
         {data.idStatusBill === 4 && (
           <>
             <View style={{ flex: 2 }}>
-              <Button title="Mua lại" />
+              <Button title="Mua lại" onPress={handleRePurcharBill} />
             </View>
             <View style={{ flex: 1 }}>{/* <Button title="Đánh giá" color={'red'} /> */}</View>
           </>
         )}
       </View>
+      <BottomSheet modalProps={{}} isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+        <View style={styles.PurchaseFrom_listBill_item_modelCancel}>
+          {listNoteCancel?.map((item, index) => (
+            <View key={index} style={styles.PurchaseFrom_listBill_item_modelCancel_item}>
+              <RadioButton
+                value={item}
+                status={indexNote === index ? 'checked' : 'unchecked'}
+                onPress={() => setIndexNote(index)}
+                color="red"
+              />
+              <Text style={styles.PurchaseFrom_listBill_item_modelCancel_item_text}>{item}</Text>
+            </View>
+          ))}
+        </View>
+        <Button title="Xác nhận" color="red" onPress={handleCancelBill} />
+      </BottomSheet>
     </View>
   );
 };
@@ -181,9 +251,10 @@ const PurchaseFrom = ({ route, navigation }: { navigation: any; route: any }) =>
   const insets = useSafeAreaInsets();
   const { idTypeBill } = route.params;
   const [listBill, setListBill] = React.useState<any | null>([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    getListBill(0);
+    getListBill();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idTypeBill]);
 
@@ -197,11 +268,33 @@ const PurchaseFrom = ({ route, navigation }: { navigation: any; route: any }) =>
     });
   };
 
-  const getListBill = async (offset: number) => {
-    let res = await getListBillByType(idTypeBill, offset);
+  const getListBill = async () => {
+    setLoading(true);
+    let res = await getListBillByType(idTypeBill, 0);
     if (res?.errCode === 0) {
       setListBill(res.data);
+      setLoading(false);
     }
+  };
+
+  const getMoreListBill = async () => {
+    setLoading(true);
+    let res = await getListBillByType(idTypeBill, listBill.length);
+    if (res?.errCode === 0) {
+      setListBill([...listBill, ...res.data]);
+      setLoading(false);
+    }
+  };
+
+  const getMoreBills = () => {
+    console.log('end');
+    getMoreListBill();
+  };
+
+  const gotoDetailBill = (id: string) => {
+    navigation.navigate('DetailBill', {
+      idBill: id,
+    });
   };
 
   return (
@@ -221,12 +314,20 @@ const PurchaseFrom = ({ route, navigation }: { navigation: any; route: any }) =>
             </TouchableOpacity>
           ))}
         </ScrollView>
-        <ScrollView style={styles.PurchaseFrom_listBill}>
-          {listBill?.map((item: any) => (
-            <ItemBill key={item.id} data={item} />
-          ))}
-          {listBill?.length === 0 && <Text>Chưa có đơn hàng nào</Text>}
-        </ScrollView>
+        {listBill?.length === 0 && !loading && <Text>Chưa có đơn hàng nào</Text>}
+        <FlatList
+          data={listBill}
+          keyExtractor={(item, index) => index + item.id}
+          renderItem={({ item }) => (
+            <ItemBill
+              data={item}
+              getListBill={getListBill}
+              onChangeIdTypeBill={onChangeIdTypeBill}
+              gotoDetailBill={gotoDetailBill}
+            />
+          )}
+          onEndReached={getMoreBills}
+        />
       </View>
     </>
   );
