@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './choose_payment_methob_styles';
 import { selectPaymentMethob } from '../../store/selectors';
 import { setPaymentMethob } from '../../store/appReducer';
+import MarkUpdate from '../mark_update/mark_update';
 
 const listMethobs = [
   {
@@ -43,7 +44,7 @@ const ChoosePaymentMethob = ({ navigation }: { navigation: any }) => {
       <View style={styles.ChoosePaymentMethob_listMethob}>
         {listMethobs?.map((item, index) => {
           return (
-            <TouchableOpacity key={index} onPress={() => handleChangMethoc(item)}>
+            <TouchableOpacity key={index} onPress={() => handleChangMethoc(item)} disabled={index === 1}>
               <View
                 style={[
                   styles.ChoosePaymentMethob_listMethob_item,
@@ -57,6 +58,7 @@ const ChoosePaymentMethob = ({ navigation }: { navigation: any }) => {
                   <Text style={styles.ChoosePaymentMethob_listMethob_item_right_sub}>{item.sub}</Text>
                 </View>
               </View>
+              {index === 1 && <MarkUpdate />}
             </TouchableOpacity>
           );
         })}

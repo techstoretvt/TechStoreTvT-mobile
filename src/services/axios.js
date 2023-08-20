@@ -48,7 +48,7 @@ instance.interceptors.request.use(
           .then(response => {
             const data = response.data;
             const newToken = data.data.accessToken;
-            console.log('End refreshToken.');
+            console.log('End refreshToken.', newToken);
             AsyncStorage.setItem('accessToken', data.data.accessToken);
             AsyncStorage.setItem('refreshToken', data.data.refreshToken);
 

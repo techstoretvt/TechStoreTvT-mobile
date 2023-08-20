@@ -2,6 +2,7 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../../screens/home_screen/home_screen';
 import ShortVideoScreen from '../../screens/short_video_screen/short_video_screen';
 import BlogScreen from '../../screens/blog_screen/blog_screen';
@@ -19,7 +20,7 @@ const BottomTabs = () => {
       activeColor="red"
       inactiveColor="#ccc"
       // barStyle={{ backgroundColor: 'tomato' }}
-    >
+      initialRouteName="Notify">
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -31,21 +32,21 @@ const BottomTabs = () => {
         name="Blog"
         component={BlogScreen}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="home" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <Icon2 name="reader-sharp" size={30} color={color} />,
         }}
       />
       <Tab.Screen
         name="ShortVideo"
         component={ShortVideoScreen}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="home" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <Icon name="video-camera" size={30} color={color} />,
         }}
       />
       <Tab.Screen
         name="Notify"
         component={NotifyScreen}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="home" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <Icon name="bell" size={30} color={color} />,
         }}
       />
       <Tab.Screen

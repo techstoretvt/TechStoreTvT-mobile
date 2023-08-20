@@ -8,7 +8,7 @@ import styles from './detail_bill_sytles';
 import HeaderPurchase from '../../components/header_purchase/header_purchase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Product_payment } from '../payment_screen/payment_screen';
-import { getDetailBill } from '../../services/api';
+import { getDetailBill, rePurchaseBill } from '../../services/api';
 
 const DetailBill = ({ route, navigation }: { route: any; navigation: any }) => {
   const insets = useSafeAreaInsets();
@@ -85,6 +85,16 @@ const DetailBill = ({ route, navigation }: { route: any; navigation: any }) => {
     }
   };
 
+  const handleRePurcharBill = async () => {
+    let res = await rePurchaseBill({
+      accessToken: 'empty',
+      id: params.idBill,
+    });
+    if (res?.errCode === 0) {
+      navigation.navigate('Cart');
+    }
+  };
+
   return (
     <View style={[styles.DetailBill_container, { marginTop: insets.top }]}>
       <HeaderPurchase title="Thông tin đơn hàng" goBack={null} />
@@ -145,7 +155,20 @@ const DetailBill = ({ route, navigation }: { route: any; navigation: any }) => {
         </View>
         <View style={styles.DetailBill_listProduct}>
           {detailBills?.map((item: any) => (
-            <Product_payment key={item.id} item={item} />
+            <View key={item.id}>
+              <Product_payment item={item} />
+              <View style={{ alignItems: 'flex-end', paddingRight: 10 }}>
+                <Button
+                  title={item.isReviews === 'true' ? 'Đã đánh giá' : 'Đánh giá'}
+                  color={'red'}
+                  onPress={() =>
+                    navigation.navigate('EvaluateScreen', {
+                      idDetailBill: item.id,
+                    })
+                  }
+                />
+              </View>
+            </View>
           ))}
         </View>
         <View style={styles.DetailBill_totals}>
@@ -190,11 +213,11 @@ const DetailBill = ({ route, navigation }: { route: any; navigation: any }) => {
       </ScrollView>
       <View style={styles.DetailBill_btns}>
         <View style={{ flex: 1 }}>
-          <Button title="Mua lại" disabled={infoBill?.idStatusBill < 3} />
+          <Button title="Mua lại" disabled={infoBill?.idStatusBill < 3} onPress={handleRePurcharBill} />
         </View>
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <Button title="Đánh giá" color="red" disabled={infoBill?.idStatusBill !== 3} />
-        </View>
+        </View> */}
       </View>
     </View>
   );

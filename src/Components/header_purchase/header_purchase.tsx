@@ -11,16 +11,17 @@ import styles from './header_purchase_styles';
 interface HeaderPurchaseProps {
   title: string;
   goBack: any;
+  showIcon?: boolean;
 }
 
-const HeaderPurchase = (props: HeaderPurchaseProps) => {
+const HeaderPurchase = ({ title, goBack, showIcon = true }: HeaderPurchaseProps) => {
   const navigation = useNavigation();
 
   const handleGoBack = () => {
-    if (!props.goBack) {
+    if (!goBack) {
       navigation.goBack();
     } else {
-      props.goBack();
+      goBack();
     }
   };
 
@@ -28,11 +29,13 @@ const HeaderPurchase = (props: HeaderPurchaseProps) => {
     <>
       <View style={[styles.HeaderPurchase_container]}>
         <View style={styles.HeaderPurchase_goBack}>
-          <TouchableOpacity onPress={() => handleGoBack()}>
-            <Icon name="long-arrow-left" size={30} color={'red'} />
-          </TouchableOpacity>
+          {showIcon && (
+            <TouchableOpacity onPress={() => handleGoBack()}>
+              <Icon name="long-arrow-left" size={30} color={'red'} />
+            </TouchableOpacity>
+          )}
         </View>
-        <Text style={styles.HeaderPurchase_title}>{props.title}</Text>
+        <Text style={styles.HeaderPurchase_title}>{title}</Text>
         <View style={styles.HeaderPurchase_right}>
           <TouchableOpacity>
             <Icon name="search" size={24} color={'red'} />

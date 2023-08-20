@@ -17,12 +17,13 @@ import ChooseDistrict, { ChooseDistrict_Header } from '../../components/choose_d
 import ChoosePaymentMethob from '../../components/choose_payment_methob/choose_payment_methob';
 import PurchaseFrom from '../../screens/purchase_from/purchase_from';
 import DetailBill from '../../screens/detail_bill/detail_bill';
+import EvaluateScreen from '../../screens/evaluata_screen/evaluate_screen';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="PurchaseFrom" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="HomeStack" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen
           name="DetailProduct"
@@ -81,6 +82,13 @@ const MainApp = () => {
           // initialParams={{
           //   idTypeBill: 1,
           // }}
+        />
+        <Stack.Screen
+          name="EvaluateScreen"
+          component={EvaluateScreen}
+          initialParams={{
+            idDetailBill: '7bbfb3c4-09ca-4785-bd95-6427b43131d3',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

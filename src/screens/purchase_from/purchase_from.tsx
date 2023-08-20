@@ -39,13 +39,13 @@ const listNoteCancel = ['Không muốn mua nửa', 'Thay đổi phân loại', '
 const ItemBill = ({
   data,
   getListBill,
-  onChangeIdTypeBill,
   gotoDetailBill,
+  navigation,
 }: {
   data: any;
   getListBill: any;
-  onChangeIdTypeBill: any;
   gotoDetailBill: any;
+  navigation: any;
 }) => {
   const [isVisible, setIsVisible] = React.useState(false);
   const [indexNote, setIndexNote] = React.useState(0);
@@ -142,7 +142,7 @@ const ItemBill = ({
       id: data.id,
     });
     if (res?.errCode === 0) {
-      onChangeIdTypeBill(1);
+      navigation.navigate('Cart');
     }
   };
 
@@ -212,9 +212,6 @@ const ItemBill = ({
           <>
             <View style={{ flex: 2 }}>
               <Button title="Mua lại" onPress={handleRePurcharBill} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Button title="Đánh giá" color={'red'} />
             </View>
           </>
         )}
@@ -319,12 +316,7 @@ const PurchaseFrom = ({ route, navigation }: { navigation: any; route: any }) =>
           data={listBill}
           keyExtractor={(item, index) => index + item.id}
           renderItem={({ item }) => (
-            <ItemBill
-              data={item}
-              getListBill={getListBill}
-              onChangeIdTypeBill={onChangeIdTypeBill}
-              gotoDetailBill={gotoDetailBill}
-            />
+            <ItemBill data={item} getListBill={getListBill} gotoDetailBill={gotoDetailBill} navigation={navigation} />
           )}
           onEndReached={getMoreBills}
         />

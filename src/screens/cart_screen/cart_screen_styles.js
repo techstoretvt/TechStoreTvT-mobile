@@ -5,8 +5,6 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   CartScreen_container: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'red',
     position: 'relative',
   },
   CartScreen_listProduct: {

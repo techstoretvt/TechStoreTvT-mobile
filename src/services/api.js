@@ -346,6 +346,76 @@ const getDetailBill = async data => {
   }
 };
 
+const createEvaluate = async data => {
+  try {
+    return await axios.post('/api/v1/create-new-evaluate-product', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getDetailBillEvaluate = async data => {
+  try {
+    return await axios.get('/api/v2/get-detail-bill-by-id-2', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const updateEvaluate = async data => {
+  try {
+    return await axios.put('/api/v1/update-evaluate-product', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getListShortVideo = async data => {
+  try {
+    return await axios.get('/api/v1/get-list-short-video', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getListBlogForyou = async data => {
+  try {
+    return await axios.get('/api/v1/get-list-blog', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -371,4 +441,9 @@ export {
   recieveBill,
   rePurchaseBill,
   getDetailBill,
+  createEvaluate,
+  getDetailBillEvaluate,
+  updateEvaluate,
+  getListShortVideo,
+  getListBlogForyou,
 };
