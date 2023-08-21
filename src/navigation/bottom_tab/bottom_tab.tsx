@@ -20,7 +20,7 @@ const BottomTabs = () => {
       activeColor="red"
       inactiveColor="#ccc"
       // barStyle={{ backgroundColor: 'tomato' }}
-      initialRouteName="Notify">
+      initialRouteName="MyAccount">
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -50,7 +50,7 @@ const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name="My Account"
+        name="MyAccount"
         component={MyAccountScreen}
         options={{
           tabBarIcon: ({ color }) => <Icon name="user" size={30} color={color} />,

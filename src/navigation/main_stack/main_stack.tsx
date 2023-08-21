@@ -18,6 +18,9 @@ import ChoosePaymentMethob from '../../components/choose_payment_methob/choose_p
 import PurchaseFrom from '../../screens/purchase_from/purchase_from';
 import DetailBill from '../../screens/detail_bill/detail_bill';
 import EvaluateScreen from '../../screens/evaluata_screen/evaluate_screen';
+import DetailNotify from '../../screens/detail_notify/detail_notify';
+import SettingAccount from '../../screens/setting_account/setting_account';
+import RegisterScreen from '../../screens/register_screen/register_screen';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
@@ -33,7 +36,7 @@ const MainApp = () => {
         />
         <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: true, title: 'Giỏ hàng (22)' }} />
+        <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: true, title: 'Giỏ hàng' }} />
         <Stack.Screen name="Payment" component={PaymentScreen} options={{ headerShown: true, title: 'Thanh toán' }} />
         <Stack.Screen
           name="ChooseAddress"
@@ -90,6 +93,16 @@ const MainApp = () => {
             idDetailBill: '7bbfb3c4-09ca-4785-bd95-6427b43131d3',
           }}
         />
+        <Stack.Screen name="DetailNotify" component={DetailNotify} />
+        <Stack.Screen
+          name="SettingAccount"
+          component={SettingAccount}
+          options={{
+            headerShown: true,
+            title: 'Thiết lập tài khoản',
+          }}
+        />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -416,6 +416,34 @@ const getListBlogForyou = async data => {
   }
 };
 
+const getListNotidyByType = async data => {
+  try {
+    return await axios.get('/api/v1/get-list-notify-by-type', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getUserLogin = async () => {
+  try {
+    return await axios.get('/api/get-user-login');
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -446,4 +474,6 @@ export {
   updateEvaluate,
   getListShortVideo,
   getListBlogForyou,
+  getListNotidyByType,
+  getUserLogin,
 };

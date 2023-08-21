@@ -126,8 +126,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   return (
     <ImageBackground
       source={{ uri: `https://source.unsplash.com/random?sig=${indexImage}` }}
-      style={styles.LoginScreen_container}
-    >
+      style={styles.LoginScreen_container}>
       <FocusAwareStatusBar />
       <View style={styles.LoginScreen_content}>
         <Text style={styles.LoginScreen_content_title}>{nameApp}</Text>
@@ -157,13 +156,12 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
               //   icon="camera"
               mode="contained"
               onPress={handleLogin}
-              loading={loading}
-            >
+              loading={loading}>
               Đăng nhập
             </Button>
           </View>
           <View style={styles.LoginScreen_content_form_btnRegister}>
-            <Button mode="outlined" onPress={() => console.log('Pressed')} textColor="#fff">
+            <Button mode="outlined" onPress={() => navigation.navigate('RegisterScreen')} textColor="#fff">
               Đăng ký
             </Button>
           </View>

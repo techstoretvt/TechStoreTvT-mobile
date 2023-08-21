@@ -256,7 +256,11 @@ const PurchaseFrom = ({ route, navigation }: { navigation: any; route: any }) =>
   }, [idTypeBill]);
 
   const funcGoBackHeader = () => {
-    navigation.navigate('HomeStack', { screen: 'Home' });
+    if (route.params.back) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('HomeStack', { screen: 'Home' });
+    }
   };
 
   const onChangeIdTypeBill = (id: number) => {

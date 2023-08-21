@@ -7,12 +7,13 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import styles from './notify_screen_styles';
 import HeaderPurchase from '../../components/header_purchase/header_purchase';
 
-const NotifyScreen = () => {
+const NotifyScreen = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.Notify_container}>
       <HeaderPurchase title="Thông báo" goBack={null} showIcon={false} />
       <View style={styles.NotifyScreen_list}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DetailNotify', { title: 'Khuyễn mãi', type: 'promotion' })}>
           <View style={styles.NotifyScreen_list_item}>
             <View style={styles.NotifyScreen_list_item_left}>
               <Icon name="card-giftcard" size={30} color={'orange'} />
@@ -28,7 +29,7 @@ const NotifyScreen = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('DetailNotify', { title: 'Video', type: 'short_video' })}>
           <View style={styles.NotifyScreen_list_item}>
             <View style={styles.NotifyScreen_list_item_left}>
               <Icon name="video-collection" size={30} color={'green'} />
@@ -44,7 +45,7 @@ const NotifyScreen = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('DetailNotify', { title: 'Bài viết', type: 'blog' })}>
           <View style={styles.NotifyScreen_list_item}>
             <View style={styles.NotifyScreen_list_item_left}>
               <Icon2 name="text-document-inverted" size={30} color={'red'} />
@@ -60,7 +61,7 @@ const NotifyScreen = () => {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('DetailNotify', { title: 'Đơn hàng', type: 'order' })}>
           <View style={styles.NotifyScreen_list_item}>
             <View style={styles.NotifyScreen_list_item_left}>
               <Icon2 name="shopping-cart" size={30} color={'violet'} />
