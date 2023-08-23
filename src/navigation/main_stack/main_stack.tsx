@@ -21,12 +21,15 @@ import EvaluateScreen from '../../screens/evaluata_screen/evaluate_screen';
 import DetailNotify from '../../screens/detail_notify/detail_notify';
 import SettingAccount from '../../screens/setting_account/setting_account';
 import RegisterScreen from '../../screens/register_screen/register_screen';
+import VerifyRegisterScreen from '../../screens/verify_register_screen/verify_register_screen';
+import SearchScreen from '../../screens/search_screen/search_screen';
+import DetailSearch from '../../screens/detail_search/detail_search';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeStack" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="DetailSearch" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen
           name="DetailProduct"
@@ -103,6 +106,19 @@ const MainApp = () => {
           }}
         />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <Stack.Screen
+          name="VerifyRegisterScreen"
+          component={VerifyRegisterScreen}
+          // initialParams={{
+          //   idDetailBill: '7bbfb3c4-09ca-4785-bd95-6427b43131d3',
+          // }}
+          options={{
+            headerShown: true,
+            title: '',
+          }}
+        />
+        <Stack.Screen name="SearchScreen" component={SearchScreen} />
+        <Stack.Screen name="DetailSearch" component={DetailSearch} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -20,7 +20,7 @@ const BottomTabs = () => {
       activeColor="red"
       inactiveColor="#ccc"
       // barStyle={{ backgroundColor: 'tomato' }}
-      initialRouteName="MyAccount">
+      initialRouteName="Home">
       <Tab.Screen
         name="Home"
         component={HomeScreen}

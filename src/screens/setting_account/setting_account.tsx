@@ -9,10 +9,14 @@ import styles from './setting_account_styles';
 
 const SettingAccount = ({ navigation }: { navigation: any }) => {
   const handleLogout = async () => {
-    console.log('hi');
-    await AsyncStorage.removeItem('accessToken');
-    await AsyncStorage.removeItem('refreshToken');
-    navigation.navigate('Login');
+    try {
+      console.log('Remove token');
+      await AsyncStorage.removeItem('accessToken');
+      await AsyncStorage.removeItem('refreshToken');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('Error: ', error);
+    }
   };
 
   return (

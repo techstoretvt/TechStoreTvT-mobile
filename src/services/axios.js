@@ -15,7 +15,12 @@ const requestQueue = [];
 instance.interceptors.request.use(
   async config => {
     // console.log(config.url);
-    if (config.url === '/api/v1/check-start-server' || config.url === '/api/user-login') {
+    if (
+      config.url === '/api/v1/check-start-server' ||
+      config.url === '/api/user-login' ||
+      config.url === '/api/v2/create-new-user-mobile' ||
+      config.url === '/api/v2/verify-code-for-create-user-mobile'
+    ) {
       return config;
     }
 

@@ -454,8 +454,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       enabled={true}
-      keyboardVerticalOffset={10}
-    >
+      keyboardVerticalOffset={10}>
       <ScrollView ref={scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View style={styles.DetailProduct_container}>
           <FocusAwareStatusBar translucent backgroundColor="transparent" />
@@ -494,8 +493,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
               paginationStyle={{
                 bottom: 4,
               }}
-              loop={false}
-            >
+              loop={false}>
               {infoProduct !== null &&
                 infoProduct['imageProduct-product'] &&
                 infoProduct['imageProduct-product']?.map((item, index) => (
@@ -595,16 +593,14 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
                           style={[
                             styles.content_classify_right_item,
                             { backgroundColor: index === indexClassify ? 'orange' : '#fff' },
-                          ]}
-                        >
+                          ]}>
                           <Text
                             style={[
                               styles.content_classify_right_item_text,
                               {
                                 color: index === indexClassify ? '#fff' : 'orange',
                               },
-                            ]}
-                          >
+                            ]}>
                             {item.nameClassifyProduct}
                           </Text>
                         </View>
@@ -674,8 +670,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
             <Text style={styles.discription_title}>Mô tả sản phẩm</Text>
             <View
               // eslint-disable-next-line react-native/no-inline-styles
-              style={[styles.discription_content, { height: moreContent ? 'auto' : 200 }]}
-            >
+              style={[styles.discription_content, { height: moreContent ? 'auto' : 200 }]}>
               <RenderHtml
                 contentWidth={300}
                 source={{
@@ -704,8 +699,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
                   </View>
                   <Text style={styles.evaluate_header_left_wrap_persent}>{infoEvaluate?.avgStar}/5</Text>
                   <Text
-                    style={styles.evaluate_header_left_wrap_amount}
-                  >{`(${infoEvaluate?.amoutFiller} đánh giá)`}</Text>
+                    style={styles.evaluate_header_left_wrap_amount}>{`(${infoEvaluate?.amoutFiller} đánh giá)`}</Text>
                 </View>
               </View>
               <View style={styles.evaluate_header_right}>
@@ -805,8 +799,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
         visible={openModalAddCart}
         onRequestClose={() => {
           setOpenModalAddCart(!openModalAddCart);
-        }}
-      >
+        }}>
         <View style={styles.wrapModalAddCard}>
           <View style={styles.modalAddCard}>
             <TouchableOpacity style={styles.modalAddCard_iconClose} onPress={() => setOpenModalAddCart(false)}>
@@ -831,8 +824,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
                         style={[
                           styles.modalAddCard_category_list_item,
                           { backgroundColor: index === indexClassify ? 'orange' : '#ccc' },
-                        ]}
-                      >
+                        ]}>
                         {' '}
                         {item.nameClassifyProduct}
                       </Text>
@@ -880,8 +872,8 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
         <TouchableOpacity style={styles.btnBottoms_left} onPress={() => setOpenModalAddCart(true)}>
           <Text style={styles.btnBottoms_left_text}>Thêm vào giỏ</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnBottoms_right}>
-          <Text style={styles.btnBottoms_right_text}>Mua ngay</Text>
+        <TouchableOpacity style={styles.btnBottoms_right} onPress={() => navigation.navigate('Cart')}>
+          <Text style={styles.btnBottoms_right_text}>Giỏ hàng</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

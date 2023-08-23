@@ -5,20 +5,21 @@ import {
   Image,
   ImageBackground,
   ScrollView,
-  Alert,
+  // Alert,
   RefreshControl,
   FlatList,
   TouchableOpacity,
+  // Button,
 } from 'react-native';
 import React from 'react';
 // import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Slider } from '@rneui/themed';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './home_screen_styles';
-import CountDown from 'react-native-countdown-component';
+// import CountDown from 'react-native-countdown-component';
 import Swiper from 'react-native-swiper';
 import {
   getSuggestProduct,
@@ -114,12 +115,17 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [isLoadMore, setIsLoadMore] = React.useState(false);
 
   React.useEffect(() => {
+    AsyncStorage.getItem('accessToken')
+      .then(res => {
+        console.log(res);
+      })
+      .catch(() => {
+        navigation.navigate('Login');
+      });
     // AsyncStorage.removeItem('accessToken');
     // AsyncStorage.removeItem('refreshToken');
     init();
-    return () => {
-      console.log('goi lai');
-    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -202,10 +208,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         ListHeaderComponent={
           <View>
             {/* header */}
-            <View style={styles.carousel_header_container}>
+            <View style={[styles.carousel_header_container]}>
               <FocusAwareStatusBar translucent backgroundColor="transparent" />
               <View style={styles.carousel_header_content}>
-                <View style={[styles.carousel_header_wrap_header, { top: insets.top }]}>
+                <View style={[styles.carousel_header_wrap_header, { top: insets.top + 10 }]}>
                   <HeaderHome navigation={navigation} />
                 </View>
                 <View style={[styles.carousel_header_content_slider, { paddingTop: insets.top + 50 }]}>
@@ -217,8 +223,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             {/* Banner */}
             <ImageBackground
               source={require('../../assets/images/HomeScreen/banner.png')}
-              style={styles.banner_home_container}
-            >
+              style={styles.banner_home_container}>
               <View style={styles.banner_home_Image_wrap}>
                 <Image
                   style={styles.banner_home_Image}
@@ -239,6 +244,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 <Text style={styles.banner_home_text}>Mở bán từ 7/5</Text>
               </View>
             </ImageBackground>
+            {/* <Button title="test" /> */}
 
             {/* Category */}
             <View style={styles.Category_container}>
@@ -249,8 +255,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             <View style={styles.firstAdvertisement_container}>
               <ImageBackground
                 source={require('../../assets/images/HomeScreen/firstAdvertisement1.webp')}
-                style={styles.firstAdvertisement_container_wrap}
-              >
+                style={styles.firstAdvertisement_container_wrap}>
                 <View style={styles.firstAdvertisement_container_wrap_btn}>
                   <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
                   <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
@@ -260,8 +265,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
               </ImageBackground>
               <ImageBackground
                 source={require('../../assets/images/HomeScreen/firstAdvertisement2.webp')}
-                style={[styles.firstAdvertisement_container_wrap, styles.firstAdvertisement_container_wrap.mid]}
-              >
+                style={[styles.firstAdvertisement_container_wrap, styles.firstAdvertisement_container_wrap.mid]}>
                 <View style={styles.firstAdvertisement_container_wrap_label}>
                   <Text style={[styles.firstAdvertisement_container_wrap_label_firstText]}>12.12</Text>
                   <Text style={[styles.firstAdvertisement_container_wrap_label_secondText]}>Laptop gia re</Text>
@@ -271,8 +275,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                       style={{
                         position: 'absolute',
                         display: 'none',
-                      }}
-                    >
+                      }}>
                       .
                     </Text>
                   </View>
@@ -282,8 +285,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                       style={{
                         position: 'absolute',
                         display: 'none',
-                      }}
-                    >
+                      }}>
                       .
                     </Text>
                   </View>
@@ -297,8 +299,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
               </ImageBackground>
               <ImageBackground
                 source={require('../../assets/images/HomeScreen/firstAdvertisement3.webp')}
-                style={styles.firstAdvertisement_container_wrap}
-              >
+                style={styles.firstAdvertisement_container_wrap}>
                 <View style={styles.firstAdvertisement_container_wrap_btn}>
                   <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
                   <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
@@ -330,8 +331,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                       style={{
                         color: '#fff',
                         fontWeight: 'bold',
-                      }}
-                    >
+                      }}>
                       Sieu khuyen mai
                     </Text>
                   </View>
@@ -343,19 +343,19 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             <View style={styles.promotionProduct_container}>
               <View style={styles.promotionProduct_header}>
                 <View style={styles.promotionProduct_header_left}>
-                  <CountDown
+                  {/* <CountDown
                     until={60 * 60 * 24 * 7}
                     onFinish={() => Alert.alert('finished')}
                     onPress={() => Alert.alert('hello')}
                     size={14}
-                    timeLabels={{
-                      d: '',
-                      h: '',
-                      m: '',
-                      s: '',
-                    }}
-                    showSeparator={true}
-                  />
+                    // timeLabels={{
+                    //   d: '-',
+                    //   h: '-',
+                    //   m: '-',
+                    //   s: '-',
+                    // }}
+                    showSeparator={false}
+                  /> */}
                 </View>
                 <View style={styles.promotionProduct_header_right}>
                   <Text style={styles.promotionProduct_header_right_text}>Xem tat ca</Text>
@@ -370,22 +370,19 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                         navigation.push('DetailProduct', {
                           idProduct: item.id,
                         })
-                      }
-                    >
+                      }>
                       <ImageBackground
                         source={{
                           uri: item['imageProduct-product'][0]?.imagebase64,
                         }}
-                        style={styles.promotionProduct_listProduct_product_wrapImage}
-                      >
+                        style={styles.promotionProduct_listProduct_product_wrapImage}>
                         <View style={styles.promotionProduct_listProduct_product_wrapImage_lablePersent}>
                           <Text
                             // eslint-disable-next-line react-native/no-inline-styles
                             style={{
                               color: 'red',
                               fontWeight: 'bold',
-                            }}
-                          >
+                            }}>
                             {item?.promotionProducts[0].numberPercent}%
                           </Text>
                           <Text
@@ -393,8 +390,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                             style={{
                               color: '#fff',
                               fontWeight: 'bold',
-                            }}
-                          >
+                            }}>
                             Giam
                           </Text>
                         </View>
@@ -416,8 +412,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                           color: 'red',
                           fontWeight: 'bold',
                           fontSize: 16,
-                        }}
-                      >
+                        }}>
                         359.000
                       </Text>
                     </View>
@@ -450,8 +445,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                           style={{
                             color: '#fff',
                             fontWeight: '800',
-                          }}
-                        >
+                          }}>
                           Da ban 20
                         </Text>
                       </View>

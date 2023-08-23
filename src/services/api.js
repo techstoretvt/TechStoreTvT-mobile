@@ -444,6 +444,48 @@ const getUserLogin = async () => {
   }
 };
 
+const registerUser = async data => {
+  try {
+    return await axios.post('/api/v2/create-new-user-mobile', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const verifyCreateUser = async data => {
+  try {
+    return await axios.put('/api/v2/verify-code-for-create-user-mobile', data);
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
+const getListKeyword = async data => {
+  try {
+    return await axios.get('/api/v2/get-list-keyword-search-mobile', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -476,4 +518,7 @@ export {
   getListBlogForyou,
   getListNotidyByType,
   getUserLogin,
+  registerUser,
+  verifyCreateUser,
+  getListKeyword,
 };

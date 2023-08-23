@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
   },
   btnBottoms_right: {
     paddingHorizontal: 30,
-    backgroundColor: 'green',
+    backgroundColor: 'orange',
     paddingVertical: 10,
   },
   btnBottoms_right_text: {
