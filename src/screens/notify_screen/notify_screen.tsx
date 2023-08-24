@@ -10,7 +10,7 @@ import HeaderPurchase from '../../components/header_purchase/header_purchase';
 const NotifyScreen = ({ navigation }: { navigation: any }) => {
   return (
     <View style={styles.Notify_container}>
-      <HeaderPurchase title="Thông báo" goBack={null} showIcon={false} />
+      <HeaderPurchase title="Thông báo" goBack={null} showIcon={false} navigation={navigation} />
       <View style={styles.NotifyScreen_list}>
         <TouchableOpacity
           onPress={() => navigation.navigate('DetailNotify', { title: 'Khuyễn mãi', type: 'promotion' })}>

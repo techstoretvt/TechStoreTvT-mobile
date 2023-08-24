@@ -4,7 +4,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import { Badge } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 
 import styles from './header_purchase_styles';
 
@@ -12,10 +12,11 @@ interface HeaderPurchaseProps {
   title: string;
   goBack: any;
   showIcon?: boolean;
+  navigation?: any;
 }
 
-const HeaderPurchase = ({ title, goBack, showIcon = true }: HeaderPurchaseProps) => {
-  const navigation = useNavigation();
+const HeaderPurchase = ({ title, goBack, showIcon = true, navigation }: HeaderPurchaseProps) => {
+  // const navigation = useNavigation();
 
   const handleGoBack = () => {
     if (!goBack) {
@@ -37,7 +38,7 @@ const HeaderPurchase = ({ title, goBack, showIcon = true }: HeaderPurchaseProps)
         </View>
         <Text style={styles.HeaderPurchase_title}>{title}</Text>
         <View style={styles.HeaderPurchase_right}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
             <Icon name="search" size={24} color={'red'} />
           </TouchableOpacity>
           <TouchableOpacity>

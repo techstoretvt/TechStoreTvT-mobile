@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { View, Image } from 'react-native';
+import { View, Image,TouchableOpacity } from 'react-native';
 import React from 'react';
 import styles from './slider_image_styles';
 import Swiper from 'react-native-swiper';
 
 // const windowWidth = Dimensions.get('window').width;
 
-function SliderImage({ listImages, height = 200, showsPagination = true }) {
+function SliderImage({ listImages, height = 200, showsPagination = true,navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
@@ -23,13 +23,18 @@ function SliderImage({ listImages, height = 200, showsPagination = true }) {
         >
           {listImages?.map((img, index) => {
             return (
-              <Image
-                key={index}
-                style={styles.Image}
-                source={{
-                  uri: img.cover,
-                }}
-              />
+              <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate('DetailSearchPromotion')}
+              >
+
+                <Image
+                  style={styles.Image}
+                  source={{
+                    uri: img.cover,
+                  }}
+                />
+              </TouchableOpacity>
             );
           })}
         </Swiper>

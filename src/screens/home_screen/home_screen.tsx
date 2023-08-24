@@ -34,7 +34,7 @@ import HeaderHome from '../../components/header_home/header_home';
 import Category from '../../components/category/category';
 import CardProduct from '../../components/card_product/card_product';
 import { typeProdutView } from '../../utils/interface';
-import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
+// import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
 
 interface HomeScreenProps {
   navigation: any;
@@ -209,41 +209,43 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <View>
             {/* header */}
             <View style={[styles.carousel_header_container]}>
-              <FocusAwareStatusBar translucent backgroundColor="transparent" />
+              {/* <FocusAwareStatusBar translucent backgroundColor="transparent" /> */}
               <View style={styles.carousel_header_content}>
                 <View style={[styles.carousel_header_wrap_header, { top: insets.top + 10 }]}>
                   <HeaderHome navigation={navigation} />
                 </View>
                 <View style={[styles.carousel_header_content_slider, { paddingTop: insets.top + 50 }]}>
-                  <SliderImage listImages={listEvent} height={130} />
+                  <SliderImage listImages={listEvent} height={130} navigation={navigation} />
                 </View>
               </View>
             </View>
 
             {/* Banner */}
-            <ImageBackground
-              source={require('../../assets/images/HomeScreen/banner.png')}
-              style={styles.banner_home_container}>
-              <View style={styles.banner_home_Image_wrap}>
-                <Image
-                  style={styles.banner_home_Image}
-                  source={{
-                    uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Fhome%2Fbanner%2Fiphone.webp&w=640&q=75',
-                  }}
-                />
-              </View>
-              <View style={styles.banner_home_wrap_text}>
-                <View>
-                  <Text style={[styles.banner_home_text, styles.banner_home_text_title]}>iPhone 14 Pro</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('DetailSearchPromotion')}>
+              <ImageBackground
+                source={require('../../assets/images/HomeScreen/banner.png')}
+                style={styles.banner_home_container}>
+                <View style={styles.banner_home_Image_wrap}>
+                  <Image
+                    style={styles.banner_home_Image}
+                    source={{
+                      uri: 'https://tranvanthoai.online/_next/image?url=%2Fimages%2Fhome%2Fbanner%2Fiphone.webp&w=640&q=75',
+                    }}
+                  />
                 </View>
-                <Text style={styles.banner_home_text}>Pro.Beyond. Pro.Beyond</Text>
-                <View>
-                  <Text style={styles.banner_home_text}>Giá gốc từ 21.990.000đ</Text>
+                <View style={styles.banner_home_wrap_text}>
+                  <View>
+                    <Text style={[styles.banner_home_text, styles.banner_home_text_title]}>iPhone 14 Pro</Text>
+                  </View>
+                  <Text style={styles.banner_home_text}>Pro.Beyond. Pro.Beyond</Text>
+                  <View>
+                    <Text style={styles.banner_home_text}>Giá gốc từ 21.990.000đ</Text>
+                  </View>
+                  <Text style={styles.banner_home_text}>Đăng ký mua ngay kẻo lở</Text>
+                  <Text style={styles.banner_home_text}>Mở bán từ 7/5</Text>
                 </View>
-                <Text style={styles.banner_home_text}>Đăng ký mua ngay kẻo lở</Text>
-                <Text style={styles.banner_home_text}>Mở bán từ 7/5</Text>
-              </View>
-            </ImageBackground>
+              </ImageBackground>
+            </TouchableOpacity>
             {/* <Button title="test" /> */}
 
             {/* Category */}
@@ -253,77 +255,91 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
             {/* firstAdvertisement */}
             <View style={styles.firstAdvertisement_container}>
-              <ImageBackground
-                source={require('../../assets/images/HomeScreen/firstAdvertisement1.webp')}
-                style={styles.firstAdvertisement_container_wrap}>
-                <View style={styles.firstAdvertisement_container_wrap_btn}>
-                  <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
-                  <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
-                    <Icon name="chevron-right" size={12} color="#fff" />
+              <TouchableOpacity onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                <ImageBackground
+                  source={require('../../assets/images/HomeScreen/firstAdvertisement1.webp')}
+                  style={styles.firstAdvertisement_container_wrap}>
+                  <View style={styles.firstAdvertisement_container_wrap_btn}>
+                    <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
+                    <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
+                      <Icon name="chevron-right" size={12} color="#fff" />
+                    </View>
                   </View>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                source={require('../../assets/images/HomeScreen/firstAdvertisement2.webp')}
-                style={[styles.firstAdvertisement_container_wrap, styles.firstAdvertisement_container_wrap.mid]}>
-                <View style={styles.firstAdvertisement_container_wrap_label}>
-                  <Text style={[styles.firstAdvertisement_container_wrap_label_firstText]}>12.12</Text>
-                  <Text style={[styles.firstAdvertisement_container_wrap_label_secondText]}>Laptop gia re</Text>
-                  <View style={styles.firstAdvertisement_container_wrap_label_leftCorner}>
-                    <Text
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        position: 'absolute',
-                        display: 'none',
-                      }}>
-                      .
-                    </Text>
+                </ImageBackground>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                <ImageBackground
+                  source={require('../../assets/images/HomeScreen/firstAdvertisement2.webp')}
+                  style={[styles.firstAdvertisement_container_wrap, styles.firstAdvertisement_container_wrap.mid]}>
+                  <View style={styles.firstAdvertisement_container_wrap_label}>
+                    <Text style={[styles.firstAdvertisement_container_wrap_label_firstText]}>12.12</Text>
+                    <Text style={[styles.firstAdvertisement_container_wrap_label_secondText]}>Laptop gia re</Text>
+                    <View style={styles.firstAdvertisement_container_wrap_label_leftCorner}>
+                      <Text
+                        // eslint-disable-next-line react-native/no-inline-styles
+                        style={{
+                          position: 'absolute',
+                          display: 'none',
+                        }}>
+                        .
+                      </Text>
+                    </View>
+                    <View style={styles.firstAdvertisement_container_wrap_label_rightCorner}>
+                      <Text
+                        // eslint-disable-next-line react-native/no-inline-styles
+                        style={{
+                          position: 'absolute',
+                          display: 'none',
+                        }}>
+                        .
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.firstAdvertisement_container_wrap_label_rightCorner}>
-                    <Text
-                      // eslint-disable-next-line react-native/no-inline-styles
-                      style={{
-                        position: 'absolute',
-                        display: 'none',
-                      }}>
-                      .
-                    </Text>
+                  <View style={styles.firstAdvertisement_container_wrap_btn}>
+                    <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
+                    <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
+                      <Icon name="chevron-right" size={12} color="#fff" />
+                    </View>
                   </View>
-                </View>
-                <View style={styles.firstAdvertisement_container_wrap_btn}>
-                  <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
-                  <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
-                    <Icon name="chevron-right" size={12} color="#fff" />
+                </ImageBackground>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                <ImageBackground
+                  source={require('../../assets/images/HomeScreen/firstAdvertisement3.webp')}
+                  style={styles.firstAdvertisement_container_wrap}>
+                  <View style={styles.firstAdvertisement_container_wrap_btn}>
+                    <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
+                    <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
+                      <Icon name="chevron-right" size={12} color="#fff" />
+                    </View>
                   </View>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                source={require('../../assets/images/HomeScreen/firstAdvertisement3.webp')}
-                style={styles.firstAdvertisement_container_wrap}>
-                <View style={styles.firstAdvertisement_container_wrap_btn}>
-                  <Text style={styles.firstAdvertisement_container_wrap_btn_text}>Mua ngay</Text>
-                  <View style={styles.firstAdvertisement_container_wrap_btn_wrap_icon}>
-                    <Icon name="chevron-right" size={12} color="#fff" />
-                  </View>
-                </View>
-              </ImageBackground>
+                </ImageBackground>
+              </TouchableOpacity>
             </View>
 
             {/* secondAdvertisement */}
             <View style={styles.secondAdvertisement_container}>
               <View style={styles.secondAdvertisement_content}>
-                <Image
-                  source={{
-                    uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
-                  }}
+                <TouchableOpacity
                   style={styles.secondAdvertisement_content_image}
-                />
-                <Image
-                  source={{
-                    uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-3.9e03e8b0.webp',
-                  }}
+                  onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                  <Image
+                    source={{
+                      uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-2.8cc54fa4.webp',
+                    }}
+                    style={{ flex: 1 }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.secondAdvertisement_content_image}
-                />
+                  onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                  <Image
+                    source={{
+                      uri: 'https://tranvanthoai.online/_next/static/media/slider-image-slide-3.9e03e8b0.webp',
+                    }}
+                    style={{ flex: 1 }}
+                  />
+                </TouchableOpacity>
                 <View style={styles.secondAdvertisement_content_wrap_label}>
                   <View style={styles.secondAdvertisement_content_label}>
                     <Text
@@ -357,10 +373,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                     showSeparator={false}
                   /> */}
                 </View>
-                <View style={styles.promotionProduct_header_right}>
+                <TouchableOpacity
+                  style={styles.promotionProduct_header_right}
+                  onPress={() => navigation.navigate('DetailSearchPromotion')}>
                   <Text style={styles.promotionProduct_header_right_text}>Xem tat ca</Text>
                   <Icon name="chevron-right" size={14} color="#333" />
-                </View>
+                </TouchableOpacity>
               </View>
               <ScrollView style={styles.promotionProduct_listProduct} horizontal={true}>
                 {listPromotionProduct?.map(item => (
@@ -492,13 +510,14 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                 >
                   {listImages?.map((img, index) => {
                     return (
-                      <Image
-                        key={index}
-                        style={styles.finallyAdvertisement_wrapSlider_image}
-                        source={{
-                          uri: img,
-                        }}
-                      />
+                      <TouchableOpacity key={index} onPress={() => navigation.navigate('DetailSearchPromotion')}>
+                        <Image
+                          style={styles.finallyAdvertisement_wrapSlider_image}
+                          source={{
+                            uri: img,
+                          }}
+                        />
+                      </TouchableOpacity>
                     );
                   })}
                 </Swiper>

@@ -21,7 +21,7 @@ const StartScreen = ({ navigation }: StartScreen) => {
         setProgess(prev => {
           return +(prev + 0.1).toFixed(1);
         });
-      }, 500);
+      }, 3000);
     }
   }, [progess]);
 
@@ -59,8 +59,7 @@ const StartScreen = ({ navigation }: StartScreen) => {
       <FocusAwareStatusBar />
       <ImageBackground
         source={{ uri: `https://source.unsplash.com/random?sig=${indexImage}` }}
-        style={styles.startScreen_container_wrapImage}
-      >
+        style={styles.startScreen_container_wrapImage}>
         <View style={styles.startScreen_container_wrapImage_wrapLogo}>
           <Image
             style={styles.startScreen_container_wrapImage_logo}

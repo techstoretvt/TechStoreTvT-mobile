@@ -71,6 +71,7 @@ const SearchScreen = ({ navigation }: { navigation: any }) => {
   const [valueSearch, setValueSearch] = React.useState('');
   const idTimeoutSearch = React.useRef<any>();
   const [listKeyWord, setListKeyWord] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     getListSuggess();
@@ -85,8 +86,10 @@ const SearchScreen = ({ navigation }: { navigation: any }) => {
   };
 
   const handleGetListKeyword = async (text: string) => {
+    setLoading(true);
     let res = await getListKeyword({ value: text });
     console.log(res);
+    setLoading(false);
     if (res?.errCode === 0) {
       setListKeyWord(res.data);
     }
@@ -108,19 +111,27 @@ const SearchScreen = ({ navigation }: { navigation: any }) => {
           <Icon name="arrow-long-left" size={24} color={'red'} />
         </TouchableOpacity>
         <View style={styles.SearchScreen_header_right}>
-          <Searchbar placeholder="Search" onChangeText={text => onSearch(text)} value={valueSearch} />
+          <Searchbar
+            placeholder="Search"
+            onChangeText={text => onSearch(text)}
+            value={valueSearch}
+            elevation={4}
+            loading={loading}
+            onIconPress={() => navigation.push('DetailSearch', { keyword: valueSearch })}
+            onSubmitEditing={() => navigation.push('DetailSearch', { keyword: valueSearch })}
+          />
         </View>
       </View>
       {valueSearch === '' && (
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.SearchScreen_listKeyword}>
-            <TouchableOpacity onPress={() => navigation.navigate('DetailSearch')}>
+            <TouchableOpacity onPress={() => navigation.push('DetailSearch', { keyword: 'Điện thoại samsung' })}>
               <Text style={styles.SearchScreen_listKeyword_text}>Điện thoại samsung</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.push('DetailSearch', { keyword: 'Laptop hp' })}>
               <Text style={styles.SearchScreen_listKeyword_text}>Laptop hp</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.push('DetailSearch', { keyword: 'Tủ lạnh' })}>
               <Text style={styles.SearchScreen_listKeyword_text}>Tủ lạnh</Text>
             </TouchableOpacity>
           </View>
@@ -144,7 +155,9 @@ const SearchScreen = ({ navigation }: { navigation: any }) => {
         <ScrollView style={{ flex: 1 }}>
           <View style={styles.SearchScreen_listKeyword}>
             {listKeyWord?.map((item: any, index: number) => (
-              <TouchableOpacity key={item.id + index}>
+              <TouchableOpacity
+                key={item.id + index}
+                onPress={() => navigation.push('DetailSearch', { keyword: item.keyword })}>
                 <Text style={styles.SearchScreen_listKeyword_text}>{item.keyword}</Text>
               </TouchableOpacity>
             ))}

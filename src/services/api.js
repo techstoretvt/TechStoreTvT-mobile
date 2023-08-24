@@ -486,6 +486,20 @@ const getListKeyword = async data => {
   }
 };
 
+const searchProduct = async data => {
+  try {
+    return await axios.get('/api/v1/search-product', { params: data });
+  } catch (error) {
+    if (error?.response?.data) {
+      return error?.response?.data;
+    }
+    return {
+      errCode: -1,
+      errMessage: 'Khong bat duoc loi',
+    };
+  }
+};
+
 export {
   getSuggestProduct,
   getAllTypeProduct,
@@ -521,4 +535,5 @@ export {
   registerUser,
   verifyCreateUser,
   getListKeyword,
+  searchProduct,
 };

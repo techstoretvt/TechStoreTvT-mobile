@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import React from 'react';
 
 import styles from './detail_search_styles';
@@ -53,38 +53,30 @@ const defaultListSuggestProduct_item: typeProdutView = {
   },
 };
 
-interface productProps {
-  item: typeProdutView;
-}
-
-const defaultListSuggestProduct: productProps[] = [
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
-  { item: defaultListSuggestProduct_item },
+const defaultListSuggestProduct: typeProdutView[] = [
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
+  defaultListSuggestProduct_item,
 ];
 
-const DetailSearch = ({ navigation, route }: { navigation: any; route: any }) => {
+const DetailSearchPromotion = ({ navigation }: { navigation: any }) => {
   const insets = useSafeAreaInsets();
-  const [listProduct, setListProduct] = React.useState<productProps[]>(defaultListSuggestProduct);
-  const [loading, setLoading] = React.useState(false);
-  const [isEnd, setIsEnd] = React.useState(false);
+  const [listProduct, setListProduct] = React.useState<typeProdutView[]>(defaultListSuggestProduct);
 
   React.useEffect(() => {
-    getListProduct(1, route.params.keyword);
-    setIsEnd(false);
+    getListProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route.params.keyword]);
+  }, []);
 
-  const getListProduct = async (page: any, keyword: string) => {
-    setLoading(true);
+  const getListProduct = async () => {
     let res = await searchProduct({
-      page: page,
-      keyword: keyword,
+      page: 1,
+      promotion: 'true',
       maxProduct: 10,
     });
     if (res?.errCode === 0) {
@@ -94,21 +86,10 @@ const DetailSearch = ({ navigation, route }: { navigation: any; route: any }) =>
         let newArr = [...listProduct, ...res.data];
         setListProduct(newArr);
       }
-      if (res.data.length === 0) {
-        setIsEnd(true);
-      }
     } else {
       if (res.status === 401) {
         navigation.navigate('Login');
       }
-    }
-    setLoading(false);
-  };
-  const getMoreList = () => {
-    if (!isEnd) {
-      let listLength = listProduct.length;
-      let page = listLength === 8 ? 1 : listLength / 10 + 1;
-      getListProduct(page, route.params.keyword);
     }
   };
 
@@ -120,20 +101,18 @@ const DetailSearch = ({ navigation, route }: { navigation: any; route: any }) =>
       <FlatList
         style={{ marginTop: 10 }}
         data={listProduct}
-        keyExtractor={(item: any, index: number) => index + item.item.id}
+        keyExtractor={(item: any, index: number) => index + item.id}
         renderItem={({ item }) => (
           <View style={styles.DetailSearch_listProduct_item}>
-            <Card_product data={item.item} navigation={navigation} />
+            <Card_product data={item} navigation={navigation} />
           </View>
         )}
         horizontal={false}
         numColumns={2}
-        onEndReached={getMoreList}
+        // onEndReached={getMoreList}
       />
-      {loading && <Text style={{ textAlign: 'center', paddingVertical: 10 }}>Loading...</Text>}
-      {isEnd && <Text style={{ textAlign: 'center', paddingVertical: 10 }}>-- Hết --</Text>}
     </View>
   );
 };
 
-export default DetailSearch;
+export default DetailSearchPromotion;

@@ -24,12 +24,13 @@ import RegisterScreen from '../../screens/register_screen/register_screen';
 import VerifyRegisterScreen from '../../screens/verify_register_screen/verify_register_screen';
 import SearchScreen from '../../screens/search_screen/search_screen';
 import DetailSearch from '../../screens/detail_search/detail_search';
+import DetailSearchPromotion from '../../screens/detail_search/detail_search_promotion';
 
 const Stack = createNativeStackNavigator();
 const MainApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="DetailSearch" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Start" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="HomeStack" component={BottomTabs} />
         <Stack.Screen
           name="DetailProduct"
@@ -119,6 +120,7 @@ const MainApp = () => {
         />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
         <Stack.Screen name="DetailSearch" component={DetailSearch} />
+        <Stack.Screen name="DetailSearchPromotion" component={DetailSearchPromotion} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -11,12 +11,18 @@ import styles from './header_home_styles';
 // };
 interface HeaderHome {
   navigation: any;
+  iconBack?: any;
 }
 
-const HeaderHome = ({ navigation }: HeaderHome) => {
+const HeaderHome = ({ navigation, iconBack }: HeaderHome) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
+        {iconBack && (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="long-arrow-left" size={26} color="red" style={{ marginRight: 10 }} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity style={styles.wrap_search} onPress={() => navigation.navigate('SearchScreen')}>
           <View style={styles.wrap_icon}>
             <Icon name="search" size={24} color="#999" />
@@ -40,21 +46,23 @@ const HeaderHome = ({ navigation }: HeaderHome) => {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.wrap_notify}>
-          <TouchableOpacity onPress={() => navigation.navigate('PurchaseFrom')}>
-            <Icon name="bell" size={26} color="#fff" />
-            <Badge
-              value={10}
-              status="error"
-              // eslint-disable-next-line react-native/no-inline-styles
-              containerStyle={{
-                position: 'absolute',
-                top: -6,
-                left: 12,
-              }}
-            />
-          </TouchableOpacity>
-        </View>
+        {!iconBack && (
+          <View style={styles.wrap_notify}>
+            <TouchableOpacity onPress={() => navigation.navigate('Notify')}>
+              <Icon name="bell" size={26} color="#fff" />
+              <Badge
+                value={10}
+                status="error"
+                // eslint-disable-next-line react-native/no-inline-styles
+                containerStyle={{
+                  position: 'absolute',
+                  top: -6,
+                  left: 12,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

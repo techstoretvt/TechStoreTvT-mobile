@@ -35,6 +35,7 @@ import {
 } from '../../services/api';
 import { formatNumberToThousands } from '../../utils/common';
 import { REACT_APP_URL_FRONTEND } from '../../utils/constant';
+import MarkUpdate from '../../components/mark_update/mark_update';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -458,17 +459,17 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
       <ScrollView ref={scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View style={styles.DetailProduct_container}>
           <FocusAwareStatusBar translucent backgroundColor="transparent" />
-          <View style={[styles.header, { paddingTop: insets.top, opacity: openLightBox ? 0 : 1 }]}>
+          <View style={[styles.header, { paddingTop: insets.top + 10, opacity: openLightBox ? 0 : 1 }]}>
             <TouchableOpacity onPress={() => navigation.pop()}>
               <View style={styles.header_goBack}>
                 <Icon name="arrow-left" size={20} color="#fff" />
               </View>
             </TouchableOpacity>
             <View style={styles.header_wrapIcon}>
-              <View style={styles.header_wrapIcon_icon}>
+              {/* <View style={styles.header_wrapIcon_icon}>
                 <Icon name="share" size={20} color="#fff" />
-              </View>
-              <View style={styles.header_wrapIcon_icon}>
+              </View> */}
+              <TouchableOpacity style={styles.header_wrapIcon_icon} onPress={() => navigation.navigate('Cart')}>
                 <Icon name="cart-plus" size={26} color="#fff" />
                 <Badge
                   value={10}
@@ -480,7 +481,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
                     right: -8,
                   }}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={[styles.wrapImages]}>
@@ -703,6 +704,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
                 </View>
               </View>
               <View style={styles.evaluate_header_right}>
+                <MarkUpdate />
                 <Text style={styles.evaluate_header_right_more}>Xem tất cả</Text>
                 <View style={styles.evaluate_header_right_icon}>
                   <Icon name="angle-right" size={24} color="red" />
@@ -757,6 +759,7 @@ const DetailProductScreen = ({ route, navigation }: DetailProductScreenProps) =>
               ))}
               {listEvaluate?.length === 0 && <Text>Chưa có đánh giá</Text>}
             </View>
+
             <View style={styles.evaluate_more}>
               <Text style={styles.evaluate_more_text}>Xem tất cả ({infoEvaluate?.amoutFiller})</Text>
               <Icon name="angle-right" size={24} color="red" />

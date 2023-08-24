@@ -5,24 +5,18 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   home_container: {
     flex: 1,
-    // borderWidth: 2,
   },
   /* carousel */
   carousel_header_container: {
-    // flex: 1,
-    // height: 200,
     backgroundColor: '#006D98',
   },
-  carousel_header_content: {
-    // flex: 1,
-    // height: 200,
-    position: 'relative',
-  },
+  carousel_header_content: {},
   carousel_header_wrap_header: {
     position: 'absolute',
     zIndex: 1,
-    // top: Platform.OS === 'ios' ? 0 : 26,
-    // marginTop: 10,
+    flex: 1,
+    left: 0,
+    right: 0,
   },
   carousel_header_content_slider: {
     paddingTop: 80,

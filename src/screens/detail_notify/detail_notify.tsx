@@ -6,7 +6,7 @@ import styles from './detail_notify_styles';
 import HeaderPurchase from '../../components/header_purchase/header_purchase';
 import { getListNotidyByType } from '../../services/api';
 
-const DetailNotify = ({ route }: { route: any }) => {
+const DetailNotify = ({ route, navigation }: { route: any; navigation: any }) => {
   const [listNotify, setListNotify] = React.useState<any | null>([]);
   const [loading, setLoading] = React.useState(false);
 
@@ -40,7 +40,7 @@ const DetailNotify = ({ route }: { route: any }) => {
 
   return (
     <View style={styles.DetailNotify_container}>
-      <HeaderPurchase title={route.params.title} goBack={null} />
+      <HeaderPurchase title={route.params.title} goBack={null} navigation={navigation} />
       {listNotify.length === 0 && !loading && <Text>Không có thông báo nào gần đây.</Text>}
       {listNotify.length === 0 && loading && <Text>Đang tải dữ liệu.</Text>}
 

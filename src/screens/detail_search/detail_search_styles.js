@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     minHeight: 100,
     width: '49%',
     marginBottom: 10,
+    padding: 3,
   },
 });
 
