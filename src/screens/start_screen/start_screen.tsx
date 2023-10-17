@@ -19,9 +19,9 @@ const StartScreen = ({ navigation }: StartScreen) => {
     if (progess < 0.85) {
       setTimeout(() => {
         setProgess(prev => {
-          return +(prev + 0.1).toFixed(1);
+          return +(prev + 0.01).toFixed(2);
         });
-      }, 3000);
+      }, 500);
     }
   }, [progess]);
 

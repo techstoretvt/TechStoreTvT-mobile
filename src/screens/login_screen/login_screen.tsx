@@ -3,7 +3,7 @@ import { View, Text, ImageBackground, TextInput as NativeTextInput } from 'react
 import React from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 
 import styles from './login_styles';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
@@ -13,6 +13,9 @@ import { userLoginService } from '../../services/api';
 interface LoginScreenProps {
   navigation: any;
 }
+
+
+
 
 const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const [email, setEmail] = React.useState('');
@@ -103,25 +106,37 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const handleLoginGoogle = async () => {
     console.log('vao');
     try {
-      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-      console.log('aaaaa');
+      GoogleSignin.configure({
+        webClientId: '1051226548375-224relhu5ls2roroco5d16ccsrc0ssn6.apps.googleusercontent.com',
+      });
+      let check = await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-      const userInfo = await GoogleSignin.signIn();
-      console.log('userInfor: ', userInfo);
-    } catch (error) {
+      if (check) {
+
+        const isSignedIn = await GoogleSignin.isSignedIn();
+        console.log('isSingnedIn', isSignedIn);
+
+        const userInfo = await GoogleSignin.signIn();
+        console.log('userInfor: ', userInfo);
+
+      }
+
+    } catch (error: any) {
       console.log('error: ', error);
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('SIGN_IN_CANCELLED');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('IN_PROGRESS');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('PLAY_SERVICES_NOT_AVAILABLE');
+      } else {
+        console.log('other');
+      }
 
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+
     }
   };
+
 
   return (
     <ImageBackground
@@ -168,9 +183,15 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         </View>
         <Text style={styles.LoginScreen_content_or}>or</Text>
         <View style={styles.LoginScreen_content_formLoginSocials}>
-          <Button icon="camera" mode="outlined" onPress={handleLoginGoogle} textColor="#fff">
+          {/* <Button icon="camera" mode="outlined" onPress={handleLoginGoogle} textColor="#fff">
             Đăng nhập với Google
-          </Button>
+          </Button> */}
+          <GoogleSigninButton
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={handleLoginGoogle}
+          // disabled={this.state.isSigninInProgress}
+          />
         </View>
       </View>
     </ImageBackground>
