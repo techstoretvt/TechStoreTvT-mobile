@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "115830002890",
+    "project_id": "techstorelogin",
+    "storage_bucket": "techstorelogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115830002890:android:95d69e26dc758db075d033",
+        "android_client_info": {
+          "package_name": "com.techstoretvt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115830002890-2hj0thef47qiv1kvtfccogm04he669pp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techstoretvt",
+            "certificate_hash": "199b55ab377b1fb2e80c610d2bfba1a038caaefc"
+          }
+        },
+        {
+          "client_id": "115830002890-95ruftoqnrnnvtkg2bd75frsl31sh65o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqJOW0O7EOgnJ6A_4RRtbWdAi5-MpcY1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115830002890-95ruftoqnrnnvtkg2bd75frsl31sh65o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

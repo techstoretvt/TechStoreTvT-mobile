@@ -159,7 +159,7 @@ const Category = ({ data }: CategoryProps) => {
         horizontal={true}
         // autoplay={true}
         dotColor="#ccc"
-        // showsPagination={false}
+        showsPagination={false}
         // autoplayTimeout={2}
         // removeClippedSubviews={false}
         // eslint-disable-next-line react-native/no-inline-styles

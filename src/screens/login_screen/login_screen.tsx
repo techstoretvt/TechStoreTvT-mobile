@@ -3,7 +3,8 @@ import { View, Text, ImageBackground, TextInput as NativeTextInput } from 'react
 import React from 'react';
 import { TextInput, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin, statusCodes, GoogleSigninButton } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 import styles from './login_styles';
 import FocusAwareStatusBar from '../../components/FocusAwareStatusBar/FocusAwareStatusBar';
@@ -13,6 +14,13 @@ import { userLoginService } from '../../services/api';
 interface LoginScreenProps {
   navigation: any;
 }
+
+GoogleSignin.configure({
+  webClientId: '115830002890-95ruftoqnrnnvtkg2bd75frsl31sh65o.apps.googleusercontent.com',
+  offlineAccess: true,
+  forceCodeForRefreshToken: true,
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+});
 
 
 
@@ -106,20 +114,16 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
   const handleLoginGoogle = async () => {
     console.log('vao');
     try {
-      GoogleSignin.configure({
-        webClientId: '1051226548375-224relhu5ls2roroco5d16ccsrc0ssn6.apps.googleusercontent.com',
-      });
-      let check = await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-      if (check) {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      // Get the users ID token
+      const { idToken } = await GoogleSignin.signIn();
+      console.log('idToken: ', idToken);
 
-        const isSignedIn = await GoogleSignin.isSignedIn();
-        console.log('isSingnedIn', isSignedIn);
 
-        const userInfo = await GoogleSignin.signIn();
-        console.log('userInfor: ', userInfo);
-
-      }
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth().signInWithCredential(googleCredential);
 
     } catch (error: any) {
       console.log('error: ', error);
@@ -136,6 +140,7 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
 
     }
   };
+
 
 
   return (
@@ -183,15 +188,10 @@ const LoginScreen = ({ navigation }: LoginScreenProps) => {
         </View>
         <Text style={styles.LoginScreen_content_or}>or</Text>
         <View style={styles.LoginScreen_content_formLoginSocials}>
-          {/* <Button icon="camera" mode="outlined" onPress={handleLoginGoogle} textColor="#fff">
+          <Button icon="camera" mode="outlined" onPress={handleLoginGoogle} textColor="#fff">
             Đăng nhập với Google
-          </Button> */}
-          <GoogleSigninButton
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={handleLoginGoogle}
-          // disabled={this.state.isSigninInProgress}
-          />
+          </Button>
+
         </View>
       </View>
     </ImageBackground>

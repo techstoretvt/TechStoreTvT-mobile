@@ -4,7 +4,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import { Badge } from '@rneui/themed';
-// import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import styles from './header_purchase_styles';
 
@@ -16,10 +16,14 @@ interface HeaderPurchaseProps {
 }
 
 const HeaderPurchase = ({ title, goBack, showIcon = true, navigation }: HeaderPurchaseProps) => {
-  // const navigation = useNavigation();
+  const navigation2 = useNavigation();
 
   const handleGoBack = () => {
     if (!goBack) {
+      if (!navigation) {
+        navigation2.goBack();
+        return;
+      }
       navigation.goBack();
     } else {
       goBack();

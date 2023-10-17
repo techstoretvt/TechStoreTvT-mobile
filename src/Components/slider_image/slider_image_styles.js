@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   },
   swiper: {
     paddingTop: 0,
+    border: '1px solid #000',
     // backgroundColor: '#006D98',
   },
   overlay: {

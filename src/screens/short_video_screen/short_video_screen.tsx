@@ -51,6 +51,16 @@ const ShortVideoScreen = ({ navigation }: { navigation: any }) => {
       let arrIdRes = res.data.map((item: any) => item.id);
       let newArrId = [...listIdVideo, ...arrIdRes];
       setListIdVideo(newArrId);
+
+
+      if (newData.length !== 0 && newData.length <= 10) {
+        let idVideo = newData[1].idDriveVideo;
+        let url = `https://drive.google.com/uc?export=view&id=${idVideo}`;
+        const response = await fetch(url);
+        const videoBlob = await response.blob();
+        newData[1].videoBlob = videoBlob;
+      }
+
     }
   };
 
@@ -82,25 +92,28 @@ const ShortVideoScreen = ({ navigation }: { navigation: any }) => {
           onIndexChanged={handleOnChangeIndex}
 
         >
-          {listVideo?.map((item: any, index: number) => (
-            <View key={item.id + index} style={styles.ShortVideoScreen_video}>
-              <Video
-                // source={require('../../assets/videos/videoTest.mp4')}
-                // source={{ uri: 'https://tranvanthoai.online/video/video1.mp4' }}
-                source={{
-                  uri: `https://drive.google.com/uc?export=view&id=${item.idDriveVideo}`,
-                }}
-                style={styles.ShortVideoScreen_video_vd}
-                resizeMode="contain"
-                // repeat={true}
-                muted={false}
-                paused={blurScreen}
-                poster={item.urlImage}
+          {listVideo?.map((item: any, index: number) => {
+
+            return (
+              <View key={item.id + index} style={styles.ShortVideoScreen_video}>
+                <Video
+                  // source={require('../../assets/videos/videoTest.mp4')}
+                  // source={{ uri: 'https://tranvanthoai.online/video/video1.mp4' }}
+                  source={{
+                    uri: `https://drive.google.com/uc?export=view&id=${item.idDriveVideo}`,
+                  }}
+                  style={styles.ShortVideoScreen_video_vd}
+                  resizeMode="contain"
+                  // repeat={true}
+                  muted={false}
+                  paused={blurScreen}
+                  poster={item.urlImage}
 
 
-              />
-            </View>
-          ))}
+                />
+              </View>
+            );
+          })}
           {/* <View style={styles.ShortVideoScreen_video}>
         <Video
           // source={require('../../assets/videos/videoTest.mp4')}

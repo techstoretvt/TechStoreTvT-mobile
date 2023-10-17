@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Slider } from '@rneui/themed';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useScrollToTop } from '@react-navigation/native';
 
 import styles from './home_screen_styles';
 // import CountDown from 'react-native-countdown-component';
@@ -105,6 +106,7 @@ const defaultListSuggestProduct: typeProdutView[] = [
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const insets = useSafeAreaInsets();
+  const ref = React.useRef<any>(null);
 
   const [listSuggest, setListSuggest] = React.useState<typeProdutView[]>(defaultListSuggestProduct);
   const [listDiscard, setListDiscard] = React.useState([]);
@@ -113,6 +115,15 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const [listPromotionProduct, setListPromotionProduct] = React.useState<typeProdutView[]>([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoadMore, setIsLoadMore] = React.useState(false);
+
+  useScrollToTop(
+    React.useRef({
+      scrollToTop: () => ref.current.scrollToIndex({
+        index: 0,
+        viewPosition: 4,
+      }),
+    })
+  );
 
   React.useEffect(() => {
     AsyncStorage.getItem('accessToken')
@@ -200,6 +211,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <>
       <FlatList
+        ref={ref}
         data={listSuggest}
         horizontal={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -506,7 +518,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
                   autoplayTimeout={4}
                   // removeClippedSubviews={false}
                   showsPagination={true}
-                  // automaticallyAdjustContentInsets={true}
+                // automaticallyAdjustContentInsets={true}
                 >
                   {listImages?.map((img, index) => {
                     return (
